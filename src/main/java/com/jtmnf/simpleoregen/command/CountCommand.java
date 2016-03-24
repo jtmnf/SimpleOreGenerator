@@ -1,6 +1,7 @@
 package com.jtmnf.simpleoregen.command;
 
 import com.jtmnf.simpleoregen.helper.LogHelper;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -15,28 +16,27 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClearCommand extends CommandBase {
+public class CountCommand extends CommandBase {
 
     private int topY = 200;
     private List aliases;
 
     private ArrayList<Block> ores;
+    private int[] numOres;
 
-
-    public ClearCommand() {
+    public CountCommand() {
         this.aliases = new ArrayList();
-        this.aliases.add("clearblocks");
-        this.aliases.add("cb");
+        this.aliases.add("countblocks");
     }
 
     @Override
     public String getCommandName() {
-        return "clearblocks";
+        return "countblocks";
     }
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/clearblocks <maxAreaX> <maxAreaZ>";
+        return "/countblocks <maxAreaX> <maxAreaZ> [ores]";
     }
 
     @Override
@@ -48,7 +48,6 @@ public class ClearCommand extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         ores = new ArrayList<Block>();
-        ores.add(Blocks.air);
         ores.add(Blocks.coal_ore);
         ores.add(Blocks.iron_ore);
         ores.add(Blocks.gold_ore);
@@ -57,24 +56,39 @@ public class ClearCommand extends CommandBase {
         ores.add(Blocks.diamond_ore);
         ores.add(Blocks.emerald_ore);
 
+        numOres = new int[ores.size()];
+
         if (sender instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) sender;
 
             if (args.length < 2) {
                 player.addChatComponentMessage(new TextComponentString("Need to specify the max for x and z."));
             } else {
-                if (player.isCreative()) {
+                if(player.isCreative()) {
                     int argX = Integer.parseInt(args[0]);
                     int argZ = Integer.parseInt(args[1]);
 
                     int x = (int) player.posX - argX;
                     int z = (int) player.posZ - argZ;
 
-                    player.addChatComponentMessage(new TextComponentString("Starting to clear at: " + x + ", " + topY + ", " + z));
-                    int num = clearBlocks(x, z, argX, argZ, player.getEntityWorld());
-                    player.addChatComponentMessage(new TextComponentString("Cleared " + num + " blocks"));
+                    int flag = 1;
+                    if (args.length > 2) {
+                        if (args[2].equals("ores")) {
+                            flag = 0;
+                        }
+                    }
 
-                } else {
+                    int num = countBlocks(x, z, argX, argZ, player.getEntityWorld(), flag);
+                    player.addChatComponentMessage(new TextComponentString("=== Counted " + num + " block(s) ==="));
+
+                    if (flag == 0) {
+                        for (int i = 1; i < numOres.length; i++) {
+                            String oreName = ChatFormatting.RED + ores.get(i).getLocalizedName() + ChatFormatting.WHITE + ": " + ChatFormatting.BOLD + numOres[i] + " block(s)";
+                            player.addChatComponentMessage(new TextComponentString(oreName));
+                        }
+                    }
+                }
+                else{
                     player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));
                 }
             }
@@ -83,21 +97,27 @@ public class ClearCommand extends CommandBase {
         }
     }
 
-    private int clearBlocks(int x, int z, int maxX, int maxZ, World world) {
+    private int countBlocks(int x, int z, int maxX, int maxZ, World world, int arg) {
         int countBlocks = 0;
-        for (int i = x; i < x + (maxX*2); i++) {
-            for (int j = z; j < z + (maxZ*2); j++) {
-                for (int y = topY; y > 1; y--) {
+        for (int i = x; i < x + (maxX * 2 + 1); i++) {
+            for (int j = z; j < z + (maxZ * 2 + 1); j++) {
+                for (int y = topY; y > 0; y--) {
                     boolean flag = false;
-                    for (int oreIndex = 0; oreIndex < ores.size() && !flag; oreIndex++) {
-                        if (world.getBlockState(new BlockPos(i, y, j)) == ores.get(oreIndex).getBlockState().getBaseState()) {
-                            flag = true;
+                    if(world.getBlockState(new BlockPos(i, y, j)) != Blocks.air.getBlockState().getBaseState()) {
+                        if (arg == 0) {
+                            for (int oreIndex = 0; oreIndex < ores.size() && !flag; oreIndex++) {
+                                if (world.getBlockState(new BlockPos(i, y, j)) == ores.get(oreIndex).getBlockState().getBaseState()) {
+                                    countBlocks++;
+                                    numOres[oreIndex]++;
+                                    flag = true;
+                                }
+                            }
+                            if (!flag) {
+                                countBlocks++;
+                            }
+                        } else {
+                            countBlocks++;
                         }
-                    }
-
-                    if (!flag) {
-                        world.setBlockState(new BlockPos(i, y, j), Blocks.air.getDefaultState());
-                        countBlocks++;
                     }
                 }
             }

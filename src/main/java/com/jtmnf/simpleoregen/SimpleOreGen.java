@@ -2,6 +2,7 @@ package com.jtmnf.simpleoregen;
 
 
 import com.jtmnf.simpleoregen.command.ClearCommand;
+import com.jtmnf.simpleoregen.command.CountCommand;
 import com.jtmnf.simpleoregen.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -16,7 +17,7 @@ public class SimpleOreGen {
     /* ===== MOD INFO ===== */
     public static final String MOD_NAME = "SimpleOreGen";
     public static final String MOD_ID = "simpleoregen";
-    public static final String MOD_VERSION = "0.1.3";
+    public static final String MOD_VERSION = "1.9-0.1.4";
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */
@@ -47,5 +48,6 @@ public class SimpleOreGen {
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         event.registerServerCommand(new ClearCommand());
+        event.registerServerCommand(new CountCommand());
     }
 }
