@@ -93,7 +93,7 @@ public class CountCommand extends CommandBase {
                 }
             }
         } else {
-            LogHelper.error("The command /clearblocks can only be executed by a player");
+            LogHelper.error("The command /countblocks can only be executed by a player");
         }
     }
 
