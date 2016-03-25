@@ -1,6 +1,7 @@
 package com.jtmnf.simpleoregen.command;
 
 import com.jtmnf.simpleoregen.helper.LogHelper;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -46,7 +47,6 @@ public class ClearCommand extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         ores = new ArrayList<Block>();
-        ores.add(Blocks.air);
         ores.add(Blocks.coal_ore);
         ores.add(Blocks.iron_ore);
         ores.add(Blocks.gold_ore);
@@ -75,9 +75,9 @@ public class ClearCommand extends CommandBase {
                         }
                     }
 
-                    player.addChatComponentMessage(new TextComponentString("Starting to clear at: " + x + ", " + topY + ", " + z));
+                    player.addChatComponentMessage(new TextComponentString("Starting to clear at: " + ChatFormatting.BOLD + x + ", " + topY + ", " + z));
                     int num = clearBlocks(x, z, argX, argZ, player.getEntityWorld(), flag);
-                    player.addChatComponentMessage(new TextComponentString("Cleared " + num + " blocks"));
+                    player.addChatComponentMessage(new TextComponentString("Cleared " + ChatFormatting.BOLD +  num + " blocks"));
 
                 } else {
                     player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));

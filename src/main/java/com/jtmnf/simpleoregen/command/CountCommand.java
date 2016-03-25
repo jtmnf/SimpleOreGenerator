@@ -79,7 +79,7 @@ public class CountCommand extends CommandBase {
                     }
 
                     int num = countBlocks(x, z, argX, argZ, player.getEntityWorld(), flag);
-                    player.addChatComponentMessage(new TextComponentString("=== Counted " + num + " block(s) ==="));
+                    player.addChatComponentMessage(new TextComponentString(ChatFormatting.BOLD + "=== Counted " + num + " block(s) ==="));
 
                     if (flag == 0) {
                         for (int i = 1; i < numOres.length; i++) {
