@@ -65,7 +65,7 @@ public class OreGenHandler implements IWorldGenerator {
     private static String minY = "min_y";
 
     public static void initOreGen(File xmlFile) {
-        GameRegistry.registerWorldGenerator(instance, 0);
+        GameRegistry.registerWorldGenerator(instance, 1);
         MinecraftForge.EVENT_BUS.register(instance);
         MinecraftForge.ORE_GEN_BUS.register(instance);
 

@@ -31,7 +31,7 @@ public class XMLCommandsParser {
     public XMLCommandsParser(File xmlFile) {
         this.xmlFile = xmlFile;
 
-        ores = new ArrayList<Block>();
+        ores = new ArrayList<>();
         ores.add(Blocks.coal_ore);
         ores.add(Blocks.iron_ore);
         ores.add(Blocks.gold_ore);

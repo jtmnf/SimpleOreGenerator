@@ -1,9 +1,13 @@
 package com.jtmnf.simpleoregen.proxy;
 
+import com.jtmnf.simpleoregen.handler.BedrockHandler;
 import com.jtmnf.simpleoregen.handler.ConfigHandler;
 import com.jtmnf.simpleoregen.handler.OreGenHandler;
+import com.jtmnf.simpleoregen.handler.TickHandler;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -19,6 +23,7 @@ public abstract class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new TickHandler(Minecraft.getMinecraft()));
     }
 
     public void postInit(FMLPostInitializationEvent event) {
@@ -48,6 +53,7 @@ public abstract class CommonProxy {
         config.load();
         ConfigHandler configHandler = new ConfigHandler(config);
         configHandler.setupConfig();
+        BedrockHandler.initBedrockGen();
         OreGenHandler.initOreGen(xmlNewOreGen);
         config.save();
     }
