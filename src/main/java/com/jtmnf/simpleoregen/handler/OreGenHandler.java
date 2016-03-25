@@ -50,14 +50,6 @@ public class OreGenHandler implements IWorldGenerator {
         vanillaOres.add(EventType.EMERALD);
     }
 
-    private WorldGenerator coal;
-    private WorldGenerator iron;
-    private WorldGenerator gold;
-    private WorldGenerator redstone;
-    private WorldGenerator diamond;
-    private WorldGenerator lapis;
-    private WorldGenerator emerald;
-
     private static ArrayList<CustomWorldGenBlock> generalBlockGen = new ArrayList<CustomWorldGenBlock>();
 
     /*===============================================*/
@@ -159,10 +151,10 @@ public class OreGenHandler implements IWorldGenerator {
                                 );
 
                                 LogHelper.info("Processed \'" + block.getNodeName() + "\' correctly!");
-                                LogHelper.info("== Size: " + Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()));
-                                LogHelper.info("== Tries: " + Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()));
-                                LogHelper.info("== MaxY: " + Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()));
-                                LogHelper.info("== MinY: " + Integer.parseInt(element.getElementsByTagName(minY).item(0).getTextContent()));
+                                //LogHelper.info("== Size: " + Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()));
+                                //LogHelper.info("== Tries: " + Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()));
+                                //LogHelper.info("== MaxY: " + Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()));
+                                //LogHelper.info("== MinY: " + Integer.parseInt(element.getElementsByTagName(minY).item(0).getTextContent()));
                             }
                         }
                     }
