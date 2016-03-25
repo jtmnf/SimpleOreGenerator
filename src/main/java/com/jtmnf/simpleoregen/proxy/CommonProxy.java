@@ -4,6 +4,7 @@ import com.jtmnf.simpleoregen.handler.BedrockHandler;
 import com.jtmnf.simpleoregen.handler.ConfigHandler;
 import com.jtmnf.simpleoregen.handler.OreGenHandler;
 import com.jtmnf.simpleoregen.handler.TickHandler;
+import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +19,9 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 public abstract class CommonProxy {
+
+    private File xmlFile;
+
     public void preInit(FMLPreInitializationEvent event) {
         fileConfigurations(event);
     }
@@ -50,11 +54,24 @@ public abstract class CommonProxy {
         } catch (Exception exception){
         }
 
+        xmlFile = new File(modDirString+"/commands.xml");
+
+        XMLCommandsParser xmlCommandsParser;
+        try {
+            if (xmlFile.createNewFile()) {
+                xmlCommandsParser = new XMLCommandsParser(xmlFile);
+                xmlCommandsParser.createNewFile();
+            }
+        } catch (Exception exception) {
+        }
+
         config.load();
-        ConfigHandler configHandler = new ConfigHandler(config);
-        configHandler.setupConfig();
-        BedrockHandler.initBedrockGen();
-        OreGenHandler.initOreGen(xmlNewOreGen);
+        {
+            ConfigHandler configHandler = new ConfigHandler(config);
+            configHandler.setupConfig();
+            BedrockHandler.initBedrockGen();
+            OreGenHandler.initOreGen(xmlNewOreGen);
+        }
         config.save();
     }
 
@@ -82,5 +99,9 @@ public abstract class CommonProxy {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public File getXmlFile() {
+        return xmlFile;
     }
 }

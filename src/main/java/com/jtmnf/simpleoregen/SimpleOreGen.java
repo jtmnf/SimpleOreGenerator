@@ -6,6 +6,7 @@ import com.jtmnf.simpleoregen.command.CountCommand;
 import com.jtmnf.simpleoregen.command.SpawnCommand;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import com.jtmnf.simpleoregen.proxy.CommonProxy;
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -14,6 +15,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Mod(modid = SimpleOreGen.MOD_ID, name = SimpleOreGen.MOD_NAME, version = SimpleOreGen.MOD_VERSION)
 public class SimpleOreGen {
@@ -37,7 +41,7 @@ public class SimpleOreGen {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        modDir = event.getModConfigurationDirectory().toString();
+        modDir = event.getModConfigurationDirectory().toString() + "/simpleoregen/commands.xml";
         proxy.preInit(event);
     }
 
@@ -54,26 +58,10 @@ public class SimpleOreGen {
 
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
+        XMLCommandsParser xmlCommandsParser = new XMLCommandsParser(proxy.getXmlFile());
 
-        modDir += "/simpleoregen/commands.xml";
-        File xmlCommands = new File(modDir);
-
-        XMLCommandsParser xmlCommandsParser = null;
-
-        try{
-            if(xmlCommands.createNewFile()){
-                xmlCommandsParser = new XMLCommandsParser(xmlCommands);
-                xmlCommandsParser.createNewFile();
-            }
-        } catch (Exception exception){
-        }
-
-        //xmlCommandsParser.parseClearCommand();
-        //xmlCommandsParser.parseCountCommand();
-        //xmlCommandsParser.parseSpawnCommand();
-
-        event.registerServerCommand(new ClearCommand());
-        event.registerServerCommand(new CountCommand());
+        event.registerServerCommand(new ClearCommand(xmlCommandsParser.parseCommand("clear")));
+        event.registerServerCommand(new CountCommand(xmlCommandsParser.parseCommand("count")));
         event.registerServerCommand(new SpawnCommand());
     }
 }

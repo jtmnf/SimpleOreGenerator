@@ -10,6 +10,7 @@ public class ConfigHandler {
     }
 
     public static int probability = 80;
+    public static boolean flatBedrock = true;
 
     public static int coalClusterSize = 20;
     public static int ironClusterSize = 20;
@@ -88,5 +89,7 @@ public class ConfigHandler {
         emeraldClusterTries = config.get("emerald_ore", "Number of tries to generate a vein", emeraldClusterTries).getInt();
         emeraldClusterMaxY = config.get("emerald_ore", "Max Y", emeraldClusterMaxY).getInt();
         emeraldClusterMinY = config.get("emerald_ore", "Min Y", emeraldClusterMinY).getInt();
+
+        flatBedrock = config.get("bedrock", "Flat world", flatBedrock).getBoolean();
     }
 }
