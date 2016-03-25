@@ -66,7 +66,7 @@ public class CountCommand extends CommandBase {
                     ArrayList<Block> blocks = new ArrayList<Block>();
                     if (args.length > 2) {
                         if ((blocks = mapBlocks.get(args[2])) == null) {
-                            blocks = new ArrayList<>();
+                            blocks = new ArrayList<Block>();
                         }
                     }
 

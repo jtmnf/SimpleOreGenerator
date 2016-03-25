@@ -67,7 +67,7 @@ public class ClearCommand extends CommandBase {
                     boolean invert = false;
                     if (args.length > 2) {
                         if ((blocks = mapBlocks.get(args[2])) == null) {
-                            blocks = new ArrayList<>();
+                            blocks = new ArrayList<Block>();
                         }
                         if(args.length > 3){
                             if(args[3].equals("true")){

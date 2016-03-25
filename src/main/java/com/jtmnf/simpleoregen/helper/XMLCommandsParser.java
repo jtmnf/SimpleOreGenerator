@@ -51,7 +51,7 @@ public class XMLCommandsParser {
     }
 
     public Map<String, ArrayList<Block>> parseCommand(String commandName) {
-        Map<String, ArrayList<Block>> map = new HashMap<>();
+        Map<String, ArrayList<Block>> map = new HashMap<String, ArrayList<Block>>();
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -79,7 +79,7 @@ public class XMLCommandsParser {
 
                                         NodeList node = element.getElementsByTagName(nodeBlock);
 
-                                        ArrayList<Block> temp = new ArrayList<>();
+                                        ArrayList<Block> temp = new ArrayList<Block>();
                                         for (int z = 0; z < node.getLength(); ++z) {
                                             temp.add(Block.blockRegistry.getObject(new ResourceLocation(node.item(z).getTextContent())));
                                         }
