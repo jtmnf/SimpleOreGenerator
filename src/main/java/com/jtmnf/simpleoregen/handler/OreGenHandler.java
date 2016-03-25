@@ -74,7 +74,7 @@ public class OreGenHandler implements IWorldGenerator {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public void oreGenHandlerEvent(OreGenEvent.GenerateMinable event) {
-        if (vanillaOres.contains(event.type)) {
+        if (vanillaOres.contains(event.getType())) {
             event.setResult(Event.Result.DENY);
         }
     }
