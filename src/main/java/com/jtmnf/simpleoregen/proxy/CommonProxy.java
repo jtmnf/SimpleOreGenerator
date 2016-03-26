@@ -7,12 +7,15 @@ import com.jtmnf.simpleoregen.handler.TickHandler;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -24,6 +27,7 @@ public abstract class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
         fileConfigurations(event);
+        registerRecipes();
     }
 
     public void init(FMLInitializationEvent event) {
@@ -99,6 +103,13 @@ public abstract class CommonProxy {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void registerRecipes() {
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 1), new ItemStack(Blocks.cobblestone));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 3), new ItemStack(Blocks.stone, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 5), new ItemStack(Blocks.stone, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.cobblestone), new ItemStack(Blocks.stone, 1, 5));
     }
 
     public File getXmlFile() {

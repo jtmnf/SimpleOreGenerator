@@ -4,7 +4,14 @@ import com.jtmnf.simpleoregen.blocks.CustomWorldGenBlock;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -48,6 +55,9 @@ public class OreGenHandler implements IWorldGenerator {
         vanillaOres.add(EventType.DIAMOND);
         vanillaOres.add(EventType.REDSTONE);
         vanillaOres.add(EventType.EMERALD);
+        vanillaOres.add(EventType.ANDESITE);
+        vanillaOres.add(EventType.DIORITE);
+        vanillaOres.add(EventType.GRANITE);
     }
 
     private static ArrayList<CustomWorldGenBlock> generalBlockGen = new ArrayList<CustomWorldGenBlock>();
@@ -82,13 +92,16 @@ public class OreGenHandler implements IWorldGenerator {
     public OreGenHandler() {
         GameRegistry.registerWorldGenerator(this, 1);
 
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.coal_ore, ConfigHandler.coalClusterSize, ConfigHandler.coalClusterTries, ConfigHandler.coalClusterMaxY, ConfigHandler.coalClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.iron_ore, ConfigHandler.ironClusterSize, ConfigHandler.ironClusterTries, ConfigHandler.ironClusterMaxY, ConfigHandler.ironClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.gold_ore, ConfigHandler.goldClusterSize, ConfigHandler.goldClusterTries, ConfigHandler.goldClusterMaxY, ConfigHandler.goldClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.redstone_ore, ConfigHandler.redstoneClusterSize, ConfigHandler.redstoneClusterTries, ConfigHandler.redstoneClusterMaxY, ConfigHandler.redstoneClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.diamond_ore, ConfigHandler.diamondClusterSize, ConfigHandler.diamondClusterTries, ConfigHandler.diamondClusterMaxY, ConfigHandler.diamondClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.lapis_ore, ConfigHandler.lapisClusterSize, ConfigHandler.lapisClusterTries, ConfigHandler.lapisClusterMaxY, ConfigHandler.lapisClusterMinY));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.emerald_ore, ConfigHandler.emeraldClusterSize, ConfigHandler.emeraldClusterTries, ConfigHandler.emeraldClusterMaxY, ConfigHandler.emeraldClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.coal_ore.getDefaultState(), ConfigHandler.coalClusterSize, ConfigHandler.coalClusterTries, ConfigHandler.coalClusterMaxY, ConfigHandler.coalClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.iron_ore.getDefaultState(), ConfigHandler.ironClusterSize, ConfigHandler.ironClusterTries, ConfigHandler.ironClusterMaxY, ConfigHandler.ironClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.gold_ore.getDefaultState(), ConfigHandler.goldClusterSize, ConfigHandler.goldClusterTries, ConfigHandler.goldClusterMaxY, ConfigHandler.goldClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.redstone_ore.getDefaultState(), ConfigHandler.redstoneClusterSize, ConfigHandler.redstoneClusterTries, ConfigHandler.redstoneClusterMaxY, ConfigHandler.redstoneClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.diamond_ore.getDefaultState(), ConfigHandler.diamondClusterSize, ConfigHandler.diamondClusterTries, ConfigHandler.diamondClusterMaxY, ConfigHandler.diamondClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.lapis_ore.getDefaultState(), ConfigHandler.lapisClusterSize, ConfigHandler.lapisClusterTries, ConfigHandler.lapisClusterMaxY, ConfigHandler.lapisClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.emerald_ore.getDefaultState(), ConfigHandler.emeraldClusterSize, ConfigHandler.emeraldClusterTries, ConfigHandler.emeraldClusterMaxY, ConfigHandler.emeraldClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), ConfigHandler.graniteClusterSize, ConfigHandler.graniteClusterTries, ConfigHandler.graniteClusterMaxY, ConfigHandler.graniteClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), ConfigHandler.dioriteClusterSize, ConfigHandler.dioriteClusterTries, ConfigHandler.dioriteClusterMaxY, ConfigHandler.dioriteClusterMinY));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), ConfigHandler.andesiteClusterSize, ConfigHandler.andesiteClusterTries, ConfigHandler.andesiteClusterMaxY, ConfigHandler.andesiteClusterMinY));
     }
 
     @Override
@@ -142,7 +155,7 @@ public class OreGenHandler implements IWorldGenerator {
                                 Element element = (Element) block;
 
                                 generalBlockGen.add(new CustomWorldGenBlock(
-                                                Block.blockRegistry.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())),
+                                                Block.blockRegistry.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())).getDefaultState(),
                                                 Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()),
                                                 Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()),
                                                 Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()),

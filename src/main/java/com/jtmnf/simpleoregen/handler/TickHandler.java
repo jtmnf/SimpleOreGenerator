@@ -3,6 +3,7 @@ package com.jtmnf.simpleoregen.handler;
 import com.jtmnf.simpleoregen.SimpleOreGen;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -12,6 +13,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +32,7 @@ public class TickHandler {
     @SubscribeEvent
     public void onPreInitCreateWorld(GuiScreenEvent event) {
         if(event.getGui() instanceof GuiCreateWorld) {
-            String warn1 = "This pack contains " + ChatFormatting.BOLD + ChatFormatting.RED + SimpleOreGen.MOD_NAME + ChatFormatting.RESET + ".";
+            String warn1 = "This pack contains " + ChatFormatting.RED + SimpleOreGen.MOD_NAME + ChatFormatting.RESET + ".";
             String warn2 = "It might take a " + ChatFormatting.GREEN + "little while" + ChatFormatting.RESET + " to generate a new world.";
             renderInScreen((GuiCreateWorld) event.getGui(), warn1, warn2);
         }
