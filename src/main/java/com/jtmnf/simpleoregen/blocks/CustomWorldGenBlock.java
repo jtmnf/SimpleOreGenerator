@@ -2,7 +2,6 @@ package com.jtmnf.simpleoregen.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 

@@ -66,7 +66,7 @@ public class ConfigHandler {
     public static int andesiteClusterMinY = 0;
     public static int andesiteClusterMaxY = 80;
 
-    public static void setupConfig(){
+    public static void setupConfig() {
         probability = config.get(Configuration.CATEGORY_GENERAL, "General probability for ore to spawn", probability).getInt();
         flatBedrock = config.get("bedrock", "Flat world", flatBedrock).getBoolean();
 

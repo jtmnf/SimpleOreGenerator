@@ -5,13 +5,7 @@ import com.jtmnf.simpleoregen.helper.LogHelper;
 import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -66,7 +60,6 @@ public class OreGenHandler implements IWorldGenerator {
     public static OreGenHandler instance = new OreGenHandler();
     /*===============================================*/
 
-    /* ======== ROOT NAME ======== */
     private static String root = "blocks";
     private static String registryName = "registry_name";
     private static String sizeVein = "size_vein";
@@ -119,7 +112,7 @@ public class OreGenHandler implements IWorldGenerator {
     private void generateBlock(WorldGenerator worldGenerator, World world, Random rand, int chunkX, int chunkZ, int iterations, int lowestY, int highestY) {
         Random random = new Random();
 
-        if ((random.nextInt(100) + 1) > ConfigHandler.probability) {
+        if ((random.nextInt(100) + 1) < ConfigHandler.probability) {
             for (int i = 0; i < iterations; ++i) {
                 try {
                     int x = chunkX * 16 + rand.nextInt(16);

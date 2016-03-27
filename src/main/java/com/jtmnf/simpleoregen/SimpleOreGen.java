@@ -6,18 +6,12 @@ import com.jtmnf.simpleoregen.command.CountCommand;
 import com.jtmnf.simpleoregen.command.SpawnCommand;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import com.jtmnf.simpleoregen.proxy.CommonProxy;
-import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Mod(modid = SimpleOreGen.MOD_ID, name = SimpleOreGen.MOD_NAME, version = SimpleOreGen.MOD_VERSION)
 public class SimpleOreGen {

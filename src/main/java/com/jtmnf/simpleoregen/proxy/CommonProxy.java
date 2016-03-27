@@ -37,8 +37,8 @@ public abstract class CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {
     }
 
-    private void fileConfigurations(FMLPreInitializationEvent event){
-        String modDirString = event.getModConfigurationDirectory().toString()+"/simpleoregen";
+    private void fileConfigurations(FMLPreInitializationEvent event) {
+        String modDirString = event.getModConfigurationDirectory().toString() + "/simpleoregen";
 
         File modDir = new File(modDirString);
         modDir.mkdirs();
@@ -47,18 +47,18 @@ public abstract class CommonProxy {
         File xmlNewOreGen = new File(modDir + "/blockoregen.xml");
         File dumpRegistry = new File(modDir + "/blockregistry.cfg");
 
-        try{
+        try {
             xmlNewOreGen.createNewFile();
-        } catch (Exception exception){
+        } catch (Exception exception) {
         }
 
-        try{
+        try {
             dumpRegistry.createNewFile();
             dump(dumpRegistry);
-        } catch (Exception exception){
+        } catch (Exception exception) {
         }
 
-        xmlFile = new File(modDirString+"/commands.xml");
+        xmlFile = new File(modDirString + "/commands.xml");
 
         XMLCommandsParser xmlCommandsParser;
         try {
@@ -79,8 +79,8 @@ public abstract class CommonProxy {
         config.save();
     }
 
-    private void dump(File dumpRegistry){
-        try{
+    private void dump(File dumpRegistry) {
+        try {
             PrintWriter writer = new PrintWriter(dumpRegistry, "UTF-8");
 
             writer.println("### THIS FILE CONTAINS ALL BLOCK REGISTRIES");
@@ -93,14 +93,14 @@ public abstract class CommonProxy {
 
             Iterator itr = Block.blockRegistry.getKeys().iterator();
 
-            while(itr.hasNext()){
+            while (itr.hasNext()) {
                 String string = itr.next().toString();
                 writer.println(Block.blockRegistry.getObject(new ResourceLocation(string)).getLocalizedName() + "\n\t" + string);
                 writer.println();
             }
 
             writer.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
