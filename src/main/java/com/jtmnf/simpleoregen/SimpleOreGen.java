@@ -5,7 +5,9 @@ import com.jtmnf.simpleoregen.command.ClearCommand;
 import com.jtmnf.simpleoregen.command.CountCommand;
 import com.jtmnf.simpleoregen.command.SpawnCommand;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
+import com.jtmnf.simpleoregen.mods.Compatibility;
 import com.jtmnf.simpleoregen.proxy.CommonProxy;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,7 +21,7 @@ public class SimpleOreGen {
     /* ===== MOD INFO ===== */
     public static final String MOD_NAME = "SimpleOreGen";
     public static final String MOD_ID = "simpleoregen";
-    public static final String MOD_VERSION = "1.9-0.2.2";
+    public static final String MOD_VERSION = "1.9-0.2.4";
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */
@@ -31,11 +33,8 @@ public class SimpleOreGen {
     @SidedProxy(clientSide = "com.jtmnf.simpleoregen.proxy.ClientProxy", serverSide = "com.jtmnf.simpleoregen.proxy.ServerProxy")
     public static CommonProxy proxy;
 
-    private String modDir;
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        modDir = event.getModConfigurationDirectory().toString() + "/simpleoregen/commands.xml";
         proxy.preInit(event);
     }
 

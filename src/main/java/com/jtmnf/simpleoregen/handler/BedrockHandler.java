@@ -14,6 +14,7 @@ import java.util.Random;
 public class BedrockHandler implements IWorldGenerator {
 
     public static BedrockHandler instance = new BedrockHandler();
+    private int y = 5;
 
     public static void initBedrockGen() {
         GameRegistry.registerWorldGenerator(instance, 0);
@@ -29,12 +30,19 @@ public class BedrockHandler implements IWorldGenerator {
     private void generateWorld(World world, int chunkX, int chunkZ) {
         switch (world.provider.getDimension()) {
             case 0:
+                if(y < ConfigHandler.flatBedrockLayers){
+                    y = ConfigHandler.flatBedrockLayers - 1;
+                }
+
                 for (int blockX = 0; blockX < 16; blockX++) {
                     for (int blockZ = 0; blockZ < 16; blockZ++) {
-                        for (int blockY = 5; blockY > 0; blockY--) {
+                        for (int blockY = y; blockY > ConfigHandler.flatBedrockLayers-1; blockY--) {
                             if (world.getBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ)) == Blocks.bedrock.getDefaultState()) {
                                 world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.stone.getDefaultState(), 2);
                             }
+                        }
+                        for (int blockY = ConfigHandler.flatBedrockLayers-1; blockY > 0; blockY--){
+                            world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.bedrock.getDefaultState(), 2);
                         }
                     }
                 }
