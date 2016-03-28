@@ -14,6 +14,10 @@ public class ConfigHandler {
     public static int probability = 75;
     public static boolean flatBedrock = true;
     public static int flatBedrockLayers = 1;
+    public static boolean retrogenOres = false;
+    public static boolean retrogenBedrock = false;
+    public static boolean retrogenOresAccess = false;
+    public static boolean retrogenBedrockAccess = false;
 
     public static int coalClusterSize = 17;
     public static int ironClusterSize = 8;
@@ -73,6 +77,18 @@ public class ConfigHandler {
         probability = config.get("01_"+Configuration.CATEGORY_GENERAL, "General probability for ore to spawn (more means more)", probability).getInt();
         flatBedrock = config.get("01_"+Configuration.CATEGORY_GENERAL, "Flat bedrock", flatBedrock).getBoolean();
         flatBedrockLayers = config.get("01_"+Configuration.CATEGORY_GENERAL, "Layers of bedrock", flatBedrockLayers).getInt();
+        retrogenOres = config.get("01_"+Configuration.CATEGORY_GENERAL, "Retrogen Ores", retrogenOres).getBoolean();
+        retrogenBedrock = config.get("01_"+Configuration.CATEGORY_GENERAL, "Retrogen Bedrock", retrogenBedrock).getBoolean();
+
+        if(retrogenOres){
+            retrogenOresAccess = true;
+            config.get("01_"+Configuration.CATEGORY_GENERAL, "Retrogen Ores", retrogenOres).set(false);
+        }
+
+        if(retrogenBedrock){
+            retrogenBedrockAccess = true;
+            config.get("01_"+Configuration.CATEGORY_GENERAL, "Retrogen Bedrock", retrogenBedrock).set(false);
+        }
 
         coalClusterSize = config.get("05_coal_ore", "Size of a vein", coalClusterSize).getInt();
         coalClusterTries = config.get("05_coal_ore", "Number of tries to generate a vein", coalClusterTries).getInt();

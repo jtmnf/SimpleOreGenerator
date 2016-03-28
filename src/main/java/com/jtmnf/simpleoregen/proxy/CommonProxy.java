@@ -1,9 +1,6 @@
 package com.jtmnf.simpleoregen.proxy;
 
-import com.jtmnf.simpleoregen.handler.BedrockHandler;
-import com.jtmnf.simpleoregen.handler.ConfigHandler;
-import com.jtmnf.simpleoregen.handler.OreGenHandler;
-import com.jtmnf.simpleoregen.handler.TickHandler;
+import com.jtmnf.simpleoregen.handler.*;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -35,17 +32,18 @@ public abstract class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
+
     }
 
     private void fileConfigurations(FMLPreInitializationEvent event) {
-        String modDirString = event.getModConfigurationDirectory().toString() + "/simpleoregen";
+        String modDirString = event.getModConfigurationDirectory().toString() + File.separator + "simpleoregen";
 
         File modDir = new File(modDirString);
         modDir.mkdirs();
 
-        Configuration config = new Configuration(new File(modDirString + "/simpleoregen.cfg"));
-        File xmlNewOreGen = new File(modDir + "/blockoregen.xml");
-        File dumpRegistry = new File(modDir + "/blockregistry.cfg");
+        Configuration config = new Configuration(new File(modDirString + File.separator + "simpleoregen.cfg"));
+        File xmlNewOreGen = new File(modDir + File.separator + "blockoregen.xml");
+        File dumpRegistry = new File(modDir + File.separator + "blockregistry.cfg");
 
         try {
             xmlNewOreGen.createNewFile();
@@ -58,7 +56,7 @@ public abstract class CommonProxy {
         } catch (Exception exception) {
         }
 
-        xmlFile = new File(modDirString + "/commands.xml");
+        xmlFile = new File(modDirString + File.separator + "commands.xml");
 
         XMLCommandsParser xmlCommandsParser;
         try {
@@ -73,8 +71,9 @@ public abstract class CommonProxy {
         {
             ConfigHandler configHandler = new ConfigHandler(config);
             configHandler.setupConfig();
-            BedrockHandler.initBedrockGen();
             OreGenHandler.initOreGen(xmlNewOreGen);
+            BedrockHandler.initBedrockGen();
+            RetroGenWorld.initRetroGen();
         }
         config.save();
     }

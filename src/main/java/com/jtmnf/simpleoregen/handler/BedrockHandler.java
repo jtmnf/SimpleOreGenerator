@@ -14,6 +14,7 @@ import java.util.Random;
 public class BedrockHandler implements IWorldGenerator {
 
     public static BedrockHandler instance = new BedrockHandler();
+
     private int y = 5;
 
     public static void initBedrockGen() {
@@ -23,30 +24,34 @@ public class BedrockHandler implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         if (world.getWorldType() != WorldType.FLAT && ConfigHandler.flatBedrock) {
-            generateWorld(world, chunkX, chunkZ);
+            worldGenerator(world, chunkX, chunkZ);
         }
     }
 
-    private void generateWorld(World world, int chunkX, int chunkZ) {
+    public void worldGenerator(World world, int chunkX, int chunkZ) {
         switch (world.provider.getDimension()) {
             case 0:
-                if(y < ConfigHandler.flatBedrockLayers){
-                    y = ConfigHandler.flatBedrockLayers - 1;
-                }
+                generateBottomLayer(world, chunkX, chunkZ);
+                break;
+        }
+    }
 
-                for (int blockX = 0; blockX < 16; blockX++) {
-                    for (int blockZ = 0; blockZ < 16; blockZ++) {
-                        for (int blockY = y; blockY > ConfigHandler.flatBedrockLayers-1; blockY--) {
-                            if (world.getBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ)) == Blocks.bedrock.getDefaultState()) {
-                                world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.stone.getDefaultState(), 2);
-                            }
-                        }
-                        for (int blockY = ConfigHandler.flatBedrockLayers-1; blockY > 0; blockY--){
-                            world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.bedrock.getDefaultState(), 2);
-                        }
+    private void generateBottomLayer(World world, int chunkX, int chunkZ) {
+        if (y < ConfigHandler.flatBedrockLayers) {
+            y = ConfigHandler.flatBedrockLayers - 1;
+        }
+
+        for (int blockX = 0; blockX < 16; blockX++) {
+            for (int blockZ = 0; blockZ < 16; blockZ++) {
+                for (int blockY = y; blockY > ConfigHandler.flatBedrockLayers - 1; blockY--) {
+                    if (world.getBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ)) == Blocks.bedrock.getDefaultState()) {
+                        world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.stone.getDefaultState(), 2);
                     }
                 }
-                break;
+                for (int blockY = ConfigHandler.flatBedrockLayers - 1; blockY > 0; blockY--) {
+                    world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.bedrock.getDefaultState(), 2);
+                }
+            }
         }
     }
 }
