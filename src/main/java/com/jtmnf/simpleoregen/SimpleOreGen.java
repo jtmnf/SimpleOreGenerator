@@ -21,7 +21,7 @@ public class SimpleOreGen {
     /* ===== MOD INFO ===== */
     public static final String MOD_NAME = "SimpleOreGen";
     public static final String MOD_ID = "simpleoregen";
-    public static final String MOD_VERSION = "1.9-0.2.4";
+    public static final String MOD_VERSION = "1.9-0.2.5";
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */

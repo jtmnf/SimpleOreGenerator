@@ -1,6 +1,7 @@
 package com.jtmnf.simpleoregen.handler;
 
 import com.jtmnf.simpleoregen.helper.ChunkInfo;
+import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkDataEvent;
@@ -29,7 +30,6 @@ public class RetroGenWorld {
 
     public static void initRetroGen() {
         MinecraftForge.EVENT_BUS.register(instance);
-        MinecraftForge.ORE_GEN_BUS.register(instance);
     }
 
     @SubscribeEvent
@@ -52,7 +52,6 @@ public class RetroGenWorld {
                 long xSeed = rand.nextLong() >> 2 + 1L;
                 long zSeed = rand.nextLong() >> 2 + 1L;
                 rand.setSeed((xSeed * chunkInfo.chunkX + zSeed * chunkInfo.chunkZ) ^ worldSeed);
-
 
                 if (ConfigHandler.retrogenOresAccess) {
                     OreGenHandler.instance.worldGenerator(rand, chunkInfo.chunkX, chunkInfo.chunkZ, world, 1);
@@ -84,5 +83,11 @@ public class RetroGenWorld {
                 retroChunk.put(dimensionID, chunks);
             }
         }
+    }
+
+    @SubscribeEvent
+    public void chunkSaveEvent(ChunkDataEvent.Save event){
+        //Check retrogen...
+        //May need to do some things in OreGenHandler...
     }
 }

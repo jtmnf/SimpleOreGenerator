@@ -43,6 +43,18 @@ public class ConfigHandler {
     public static int andesiteClusterTries = 10;
 
     /* ========================================================= */
+    public static String coalTarget = "minecraft:stone";
+    public static String ironTarget = "minecraft:stone";
+    public static String goldTarget = "minecraft:stone";
+    public static String redstoneTarget = "minecraft:stone";
+    public static String diamondTarget = "minecraft:stone";
+    public static String lapisTarget = "minecraft:stone";
+    public static String emeraldTarget = "minecraft:stone";
+    public static String graniteTarget = "minecraft:stone";
+    public static String dioriteTarget = "minecraft:stone";
+    public static String andesiteTarget = "minecraft:stone";
+
+    /* ========================================================= */
     public static int coalClusterMinY = 0;
     public static int coalClusterMaxY = 128;
 
