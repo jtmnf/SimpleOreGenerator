@@ -60,7 +60,7 @@ public class OreGenHandler implements IWorldGenerator {
 
     //private static ArrayList<CustomWorldGenBlock> generalBlockGen = new ArrayList<CustomWorldGenBlock>();
     //private static ArrayList<CustomWorldGenBlock> customBlockGen = new ArrayList<CustomWorldGenBlock>();
-    private static HashMap<EventType, WorldGenMinable> worldGeneratorArrayList = new HashMap<EventType, WorldGenMinable>();
+    private static HashMap<EventType, WorldGenerator> worldGeneratorArrayList = new HashMap<EventType, WorldGenerator>();
     private static HashMap<EventType, World> worlds = new HashMap<EventType, World>();
 
     public static OreGenHandler instance = new OreGenHandler();
@@ -89,10 +89,11 @@ public class OreGenHandler implements IWorldGenerator {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void oreGenHandlerEvent(OreGenEvent.GenerateMinable event) {
-        if (!worldGeneratorArrayList.containsKey(event.getType())) {
-            worldGeneratorArrayList.put(event.getType(), (WorldGenMinable) event.getGenerator());
+        if(event.getGenerator() instanceof WorldGenerator) {
+            worldGeneratorArrayList.put(event.getType(), event.getGenerator());
             worlds.put(event.getType(), event.getWorld());
         }
+
         event.setResult(Event.Result.DENY);
     }
 
@@ -110,13 +111,16 @@ public class OreGenHandler implements IWorldGenerator {
 
             World auxWorld = worlds.get(entry.getKey());
 
-            if (auxWorld != null && auxWorld.provider.getDimension() == dimensionID) {
-                this.generateBlock((WorldGenMinable) entry.getValue(), auxWorld, random, chunkX, chunkZ, 25, 0, 128);
-                /* NEED TO CHANGE THIS */
-                /* maybe talk to Fireball */
-            }
-            else if(auxWorld == null){
-                this.generateBlock((WorldGenMinable) entry.getValue(), world, random, chunkX, chunkZ, 25, 0, 128);
+            if(entry.getKey() == OreGenEvent.GenerateMinable.EventType.CUSTOM) {
+                if (auxWorld != null && auxWorld.provider.getDimension() == dimensionID) {
+                    this.generateBlock((WorldGenMinable) entry.getValue(), auxWorld, random, chunkX, chunkZ, 25, 0, 128);
+
+                    /* NEED TO CHANGE THIS */
+                    /* maybe talk to Fireball */
+                    
+                } else if (auxWorld == null) {
+                    this.generateBlock((WorldGenMinable) entry.getValue(), world, random, chunkX, chunkZ, 25, 0, 128);
+                }
             }
         }
 
