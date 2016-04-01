@@ -2,6 +2,7 @@ package com.jtmnf.simpleoregen.handler;
 
 import com.jtmnf.simpleoregen.helper.ChunkInfo;
 import net.minecraft.block.state.pattern.BlockMatcher;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkDataEvent;
@@ -27,6 +28,8 @@ public class RetroGenWorld {
     public static RetroGenWorld instance = new RetroGenWorld();
 
     public static HashMap<Integer, Queue<ChunkInfo>> retroChunk = new HashMap<Integer, Queue<ChunkInfo>>();
+    private static String nbtModId = "simpleretrogen";
+    private static String nbtGenerated = "generated";
 
     public static void initRetroGen() {
         MinecraftForge.EVENT_BUS.register(instance);
@@ -71,7 +74,18 @@ public class RetroGenWorld {
     public void chunkLoadEvent(ChunkDataEvent.Load event) {
         int dimensionID = event.getWorld().provider.getDimension();
 
-        if (ConfigHandler.retrogenOresAccess || ConfigHandler.retrogenOresAccess) {
+        NBTTagCompound tagCompound = (NBTTagCompound) event.getData().getTag(nbtModId);
+
+        boolean retronGen = false;
+        if(tagCompound != null){
+            boolean configRetroGen = ConfigHandler.retrogenBedrockAccess || ConfigHandler.retrogenOresAccess;
+
+            if(configRetroGen && !tagCompound.hasKey(nbtGenerated)){
+                retronGen = true;
+            }
+        }
+
+        if (retronGen) {
             Queue<ChunkInfo> chunks = retroChunk.get(dimensionID);
 
             if (chunks == null) {
@@ -87,7 +101,10 @@ public class RetroGenWorld {
 
     @SubscribeEvent
     public void chunkSaveEvent(ChunkDataEvent.Save event){
-        //Check retrogen...
-        //May need to do some things in OreGenHandler...
+        NBTTagCompound tagCompound = event.getData().getCompoundTag(nbtModId);
+        if(!tagCompound.hasKey(nbtGenerated)){
+            tagCompound.setBoolean(nbtGenerated, true);
+        }
+        event.getData().setTag(nbtModId, tagCompound);
     }
 }
