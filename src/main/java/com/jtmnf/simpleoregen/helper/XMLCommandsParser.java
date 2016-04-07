@@ -118,7 +118,7 @@ public class XMLCommandsParser {
 
             for (Block ore : ores) {
                 Element aux = file.createElement(nodeBlock);
-                aux.appendChild(file.createTextNode(ore.getRegistryName()));
+                aux.appendChild(file.createTextNode(ore.getRegistryName().toString()));
                 oreElem.appendChild(aux);
             }
 
@@ -147,7 +147,7 @@ public class XMLCommandsParser {
 
             for (Block ore : ores) {
                 Element aux = file.createElement(nodeBlock);
-                aux.appendChild(file.createTextNode(ore.getRegistryName()));
+                aux.appendChild(file.createTextNode(ore.getRegistryName().toString()));
                 oreElem.appendChild(aux);
             }
 

@@ -92,8 +92,6 @@ public class OreGenHandler implements IWorldGenerator {
         /*if (event.getGenerator() instanceof WorldGenerator) {
             worldGeneratorArrayList.put(event.getType(), new EventWorldHandler(event.getGenerator(), event.getWorld()));
         }*/
-
-        event.setResult(Event.Result.DENY);
     }
 
     @Override
@@ -253,7 +251,7 @@ public class OreGenHandler implements IWorldGenerator {
 
 
             Element blockM = file.createElement(blockMatcher);
-            blockM.appendChild(file.createTextNode(Blocks.stone.getRegistryName()));
+            blockM.appendChild(file.createTextNode(Blocks.stone.getRegistryName().toString()));
             clay.appendChild(blockM);
 
             /* WRITING THE XML FILE */

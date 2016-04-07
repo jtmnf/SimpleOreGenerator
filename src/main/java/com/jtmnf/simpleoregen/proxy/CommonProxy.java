@@ -69,7 +69,7 @@ public abstract class CommonProxy {
 
         config.load();
         {
-            GameRegistry.registerWorldGenerator(new WorldGen(), 1);
+            //GameRegistry.registerWorldGenerator(new WorldGen(), 1);
             ConfigHandler configHandler = new ConfigHandler(config);
             configHandler.setupConfig();
             OreGenHandler.initOreGen(xmlNewOreGen);
