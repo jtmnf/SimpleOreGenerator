@@ -28,7 +28,7 @@ public abstract class CommonProxy {
     }
 
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new TickHandler(Minecraft.getMinecraft()));
+
     }
 
     public void postInit(FMLPostInitializationEvent event) {
