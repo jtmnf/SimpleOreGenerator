@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.9-0.2.8"
+version = "1.9-0.2.9"
 group= "com.jtmnf.simpleoregen" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "simpleoregen"
 
 minecraft {
-    version = "1.9-12.16.0.1868-1.9"
+    version = "1.9-12.16.1.1907"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
