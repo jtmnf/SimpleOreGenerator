@@ -10,7 +10,7 @@ public class Compatibility {
         try {
             Class<?> className = Class.forName("com.jtmnf.simpleoregen.handler.OreGenHandler");
             Method method = className.getMethod("addToWorldGen", IBlockState.class, int.class, int.class, int.class, int.class);
-            method.invoke(className.newInstance(), Blocks.clay.getDefaultState(), 20, 20, 80, 40);
+            method.invoke(className.newInstance(), Blocks.CLAY.getDefaultState(), 20, 20, 80, 40);
         } catch (Exception e) {
             e.printStackTrace();
         }

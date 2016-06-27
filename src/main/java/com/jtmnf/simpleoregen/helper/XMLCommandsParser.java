@@ -41,13 +41,13 @@ public class XMLCommandsParser {
         this.xmlFile = xmlFile;
 
         ores = new ArrayList<Block>();
-        ores.add(Blocks.coal_ore);
-        ores.add(Blocks.iron_ore);
-        ores.add(Blocks.gold_ore);
-        ores.add(Blocks.lapis_ore);
-        ores.add(Blocks.redstone_ore);
-        ores.add(Blocks.diamond_ore);
-        ores.add(Blocks.emerald_ore);
+        ores.add(Blocks.COAL_ORE);
+        ores.add(Blocks.IRON_ORE);
+        ores.add(Blocks.GOLD_ORE);
+        ores.add(Blocks.LAPIS_ORE);
+        ores.add(Blocks.REDSTONE_ORE);
+        ores.add(Blocks.DIAMOND_ORE);
+        ores.add(Blocks.EMERALD_ORE);
     }
 
     public Map<String, ArrayList<Block>> parseCommand(String commandName) {
@@ -81,7 +81,7 @@ public class XMLCommandsParser {
 
                                         ArrayList<Block> temp = new ArrayList<Block>();
                                         for (int z = 0; z < node.getLength(); ++z) {
-                                            temp.add(Block.blockRegistry.getObject(new ResourceLocation(node.item(z).getTextContent())));
+                                            temp.add(Block.REGISTRY.getObject(new ResourceLocation(node.item(z).getTextContent())));
                                         }
                                         map.put(element.getTagName(), temp);
                                     }

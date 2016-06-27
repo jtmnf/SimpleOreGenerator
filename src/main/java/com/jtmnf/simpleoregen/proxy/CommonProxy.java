@@ -91,11 +91,11 @@ public abstract class CommonProxy {
             writer.println("### Use RegistryName for the new block spawn");
             writer.println();
 
-            Iterator itr = Block.blockRegistry.getKeys().iterator();
+            Iterator itr = Block.REGISTRY.getKeys().iterator();
 
             while (itr.hasNext()) {
                 String string = itr.next().toString();
-                writer.println(Block.blockRegistry.getObject(new ResourceLocation(string)).getLocalizedName() + "\n\t" + string);
+                writer.println(Block.REGISTRY.getObject(new ResourceLocation(string)).getLocalizedName() + "\n\t" + string);
                 writer.println();
             }
 
@@ -106,10 +106,10 @@ public abstract class CommonProxy {
     }
 
     private void registerRecipes() {
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 1), new ItemStack(Blocks.cobblestone));
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 3), new ItemStack(Blocks.stone, 1, 1));
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.stone, 1, 5), new ItemStack(Blocks.stone, 1, 3));
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.cobblestone), new ItemStack(Blocks.stone, 1, 5));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.STONE, 1, 1), new ItemStack(Blocks.COBBLESTONE));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.STONE, 1, 3), new ItemStack(Blocks.STONE, 1, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.STONE, 1, 5), new ItemStack(Blocks.STONE, 1, 3));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.COBBLESTONE), new ItemStack(Blocks.STONE, 1, 5));
     }
 
     public File getXmlFile() {

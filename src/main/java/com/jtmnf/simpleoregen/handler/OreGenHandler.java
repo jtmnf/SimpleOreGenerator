@@ -178,13 +178,13 @@ public class OreGenHandler implements IWorldGenerator {
                                 //TODO
                                 //FIXME
                                 customBlockGen.add(new CustomWorldGenBlock(
-                                                Block.blockRegistry.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())).getDefaultState(),
+                                                Block.REGISTRY.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())).getDefaultState(),
                                                 Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()),
                                                 Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()),
                                                 Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()),
                                                 Integer.parseInt(element.getElementsByTagName(minY).item(0).getTextContent()),
 
-                                                BlockMatcher.forBlock(getBlockMatcher(Block.blockRegistry.getObject(new ResourceLocation(element.getElementsByTagName(blockMatcher).item(0).getTextContent()))))
+                                                BlockMatcher.forBlock(getBlockMatcher(Block.REGISTRY.getObject(new ResourceLocation(element.getElementsByTagName(blockMatcher).item(0).getTextContent()))))
                                         )
                                 );
 
@@ -210,7 +210,7 @@ public class OreGenHandler implements IWorldGenerator {
         if (block != null) {
             return block;
         } else {
-            return Blocks.stone;
+            return Blocks.STONE;
         }
     }
 
@@ -230,7 +230,7 @@ public class OreGenHandler implements IWorldGenerator {
 
             /* INFO FOR CLAY */
             Element name = file.createElement(registryName);
-            name.appendChild(file.createTextNode(Block.blockRegistry.getNameForObject(Blocks.clay).toString()));
+            name.appendChild(file.createTextNode(Block.REGISTRY.getNameForObject(Blocks.CLAY).toString()));
             clay.appendChild(name);
 
             Element size = file.createElement(sizeVein);
@@ -251,7 +251,7 @@ public class OreGenHandler implements IWorldGenerator {
 
 
             Element blockM = file.createElement(blockMatcher);
-            blockM.appendChild(file.createTextNode(Blocks.stone.getRegistryName().toString()));
+            blockM.appendChild(file.createTextNode(Blocks.STONE.getRegistryName().toString()));
             clay.appendChild(blockM);
 
             /* WRITING THE XML FILE */
@@ -270,15 +270,15 @@ public class OreGenHandler implements IWorldGenerator {
     }
 
     private void setGeneralBlockGen() {
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.coal_ore.getDefaultState(), ConfigHandler.coalClusterSize, ConfigHandler.coalClusterTries, ConfigHandler.coalClusterMaxY, ConfigHandler.coalClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.coalTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.iron_ore.getDefaultState(), ConfigHandler.ironClusterSize, ConfigHandler.ironClusterTries, ConfigHandler.ironClusterMaxY, ConfigHandler.ironClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.ironTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.gold_ore.getDefaultState(), ConfigHandler.goldClusterSize, ConfigHandler.goldClusterTries, ConfigHandler.goldClusterMaxY, ConfigHandler.goldClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.goldTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.redstone_ore.getDefaultState(), ConfigHandler.redstoneClusterSize, ConfigHandler.redstoneClusterTries, ConfigHandler.redstoneClusterMaxY, ConfigHandler.redstoneClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.redstoneTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.diamond_ore.getDefaultState(), ConfigHandler.diamondClusterSize, ConfigHandler.diamondClusterTries, ConfigHandler.diamondClusterMaxY, ConfigHandler.diamondClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.diamondTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.lapis_ore.getDefaultState(), ConfigHandler.lapisClusterSize, ConfigHandler.lapisClusterTries, ConfigHandler.lapisClusterMaxY, ConfigHandler.lapisClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.lapisTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.emerald_ore.getDefaultState(), ConfigHandler.emeraldClusterSize, ConfigHandler.emeraldClusterTries, ConfigHandler.emeraldClusterMaxY, ConfigHandler.emeraldClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.emeraldTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), ConfigHandler.graniteClusterSize, ConfigHandler.graniteClusterTries, ConfigHandler.graniteClusterMaxY, ConfigHandler.graniteClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.graniteTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), ConfigHandler.dioriteClusterSize, ConfigHandler.dioriteClusterTries, ConfigHandler.dioriteClusterMaxY, ConfigHandler.dioriteClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.dioriteTarget)))));
-        generalBlockGen.add(new CustomWorldGenBlock(Blocks.stone.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), ConfigHandler.andesiteClusterSize, ConfigHandler.andesiteClusterTries, ConfigHandler.andesiteClusterMaxY, ConfigHandler.andesiteClusterMinY, BlockMatcher.forBlock(Block.blockRegistry.getObject(new ResourceLocation(ConfigHandler.andesiteTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.COAL_ORE.getDefaultState(), ConfigHandler.coalClusterSize, ConfigHandler.coalClusterTries, ConfigHandler.coalClusterMaxY, ConfigHandler.coalClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.coalTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.IRON_ORE.getDefaultState(), ConfigHandler.ironClusterSize, ConfigHandler.ironClusterTries, ConfigHandler.ironClusterMaxY, ConfigHandler.ironClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.ironTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.GOLD_ORE.getDefaultState(), ConfigHandler.goldClusterSize, ConfigHandler.goldClusterTries, ConfigHandler.goldClusterMaxY, ConfigHandler.goldClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.goldTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.REDSTONE_ORE.getDefaultState(), ConfigHandler.redstoneClusterSize, ConfigHandler.redstoneClusterTries, ConfigHandler.redstoneClusterMaxY, ConfigHandler.redstoneClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.redstoneTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.DIAMOND_ORE.getDefaultState(), ConfigHandler.diamondClusterSize, ConfigHandler.diamondClusterTries, ConfigHandler.diamondClusterMaxY, ConfigHandler.diamondClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.diamondTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.LAPIS_ORE.getDefaultState(), ConfigHandler.lapisClusterSize, ConfigHandler.lapisClusterTries, ConfigHandler.lapisClusterMaxY, ConfigHandler.lapisClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.lapisTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.EMERALD_ORE.getDefaultState(), ConfigHandler.emeraldClusterSize, ConfigHandler.emeraldClusterTries, ConfigHandler.emeraldClusterMaxY, ConfigHandler.emeraldClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.emeraldTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), ConfigHandler.graniteClusterSize, ConfigHandler.graniteClusterTries, ConfigHandler.graniteClusterMaxY, ConfigHandler.graniteClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.graniteTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), ConfigHandler.dioriteClusterSize, ConfigHandler.dioriteClusterTries, ConfigHandler.dioriteClusterMaxY, ConfigHandler.dioriteClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.dioriteTarget)))));
+        generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), ConfigHandler.andesiteClusterSize, ConfigHandler.andesiteClusterTries, ConfigHandler.andesiteClusterMaxY, ConfigHandler.andesiteClusterMinY, BlockMatcher.forBlock(Block.REGISTRY.getObject(new ResourceLocation(ConfigHandler.andesiteTarget)))));
     }
 }

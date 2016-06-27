@@ -24,7 +24,7 @@ public class WorldGen implements IWorldGenerator {
     private WorldGenMinable oreBlockRedstone;
 
     public WorldGen() {
-        this.oreBlockRedstone = new WorldGenMinable(Blocks.redstone_block.getDefaultState(), 8, BlockMatcher.forBlock(Blocks.stone));
+        this.oreBlockRedstone = new WorldGenMinable(Blocks.REDSTONE_BLOCK.getDefaultState(), 8, BlockMatcher.forBlock(Blocks.STONE));
     }
 
     @Override

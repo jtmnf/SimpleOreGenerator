@@ -97,7 +97,7 @@ public class CountCommand extends CommandBase {
                 for (int y = topY; y > 0; y--) {
                     boolean flag = false;
 
-                    if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.air.getDefaultState()) {
+                    if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.AIR.getDefaultState()) {
                         for (int oreIndex = 0; oreIndex < blocks.size() && !flag; oreIndex++) {
                             if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(oreIndex).getDefaultState()) {
                                 countBlocks++;

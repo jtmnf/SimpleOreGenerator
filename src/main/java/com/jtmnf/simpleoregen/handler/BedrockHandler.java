@@ -44,12 +44,12 @@ public class BedrockHandler implements IWorldGenerator {
         for (int blockX = 0; blockX < 16; blockX++) {
             for (int blockZ = 0; blockZ < 16; blockZ++) {
                 for (int blockY = y; blockY > ConfigHandler.flatBedrockLayers - 1; blockY--) {
-                    if (world.getBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ)) == Blocks.bedrock.getDefaultState()) {
-                        world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.stone.getDefaultState(), 2);
+                    if (world.getBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ)) == Blocks.BEDROCK.getDefaultState()) {
+                        world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.STONE.getDefaultState(), 2);
                     }
                 }
                 for (int blockY = ConfigHandler.flatBedrockLayers - 1; blockY > 0; blockY--) {
-                    world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.bedrock.getDefaultState(), 2);
+                    world.setBlockState(new BlockPos(chunkX * 16 + blockX, blockY, chunkZ * 16 + blockZ), Blocks.BEDROCK.getDefaultState(), 2);
                 }
             }
         }

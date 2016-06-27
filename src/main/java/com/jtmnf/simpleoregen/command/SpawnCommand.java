@@ -51,7 +51,7 @@ public class SpawnCommand extends CommandBase {
                 if (player.isCreative()) {
                     int y = Integer.parseInt(args[0]);
                     int size = Integer.parseInt(args[1]);
-                    Block block = Block.blockRegistry.getObject(new ResourceLocation("minecraft:" + args[2]));
+                    Block block = Block.REGISTRY.getObject(new ResourceLocation("minecraft:" + args[2]));
 
 
                     createVein((int) player.posX, (int) player.posZ, y, block, size, player.getEntityWorld(), 0, 0, 0);

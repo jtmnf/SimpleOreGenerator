@@ -96,7 +96,7 @@ public class ClearCommand extends CommandBase {
                 for (int y = topY; y > 0; y--) {
                     boolean flag = false;
 
-                    if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.air.getDefaultState()) {
+                    if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.AIR.getDefaultState()) {
                         for (int blockIndex = 0; blockIndex < blocks.size() && !flag; blockIndex++) {
                             if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(blockIndex).getDefaultState()) {
                                 flag = true;
@@ -108,7 +108,7 @@ public class ClearCommand extends CommandBase {
                         }
 
                         if (!flag) {
-                            world.setBlockState(new BlockPos(i, y, j), Blocks.air.getDefaultState());
+                            world.setBlockState(new BlockPos(i, y, j), Blocks.AIR.getDefaultState());
                             countBlocks++;
                         }
                     }
