@@ -65,6 +65,7 @@ public abstract class CommonProxy {
                 xmlCommandsParser.createNewFile();
             }
         } catch (Exception exception) {
+            exception.printStackTrace();
         }
 
         config.load();
@@ -76,6 +77,7 @@ public abstract class CommonProxy {
             BedrockHandler.initBedrockGen();
             RetroGenWorld.initRetroGen();
         }
+
         config.save();
     }
 
