@@ -1,7 +1,6 @@
 package com.jtmnf.simpleoregen.handler;
 
 import com.jtmnf.simpleoregen.helper.ChunkInfo;
-import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;

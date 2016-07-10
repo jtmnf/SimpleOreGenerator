@@ -11,14 +11,14 @@ import java.util.List;
 
 public class CustomWorldGenBlock {
     private WorldGenerator worldGenerator;
-    private BlockMatcher blockTarget;
+    private Block blockTarget;
     private int tries;
     private int maxY;
     private int minY;
     private List<Biome> biomeList;
 
-    public CustomWorldGenBlock(IBlockState iBlock, int size, int tries, int maxY, int minY, BlockMatcher blockTarget, List<Biome> biomeList) {
-        this.worldGenerator = new WorldGenMinable(iBlock, size, blockTarget);
+    public CustomWorldGenBlock(IBlockState iBlock, int size, int tries, int maxY, int minY, Block blockTarget, List<Biome> biomeList) {
+        this.worldGenerator = new WorldGenMinable(iBlock, size, BlockMatcher.forBlock(blockTarget));
         this.tries = tries;
         this.maxY = maxY;
         this.minY = minY;
@@ -42,7 +42,7 @@ public class CustomWorldGenBlock {
         return minY;
     }
 
-    public BlockMatcher getBlockTarget() {
+    public Block getBlockTarget() {
         return blockTarget;
     }
 

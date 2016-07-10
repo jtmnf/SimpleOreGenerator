@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -44,6 +45,7 @@ public abstract class CommonProxy {
         Configuration config = new Configuration(new File(modDirString + File.separator + "simpleoregen.cfg"));
         File xmlNewOreGen = new File(modDir + File.separator + "blockoregen.xml");
         File dumpRegistry = new File(modDir + File.separator + "blockregistry.cfg");
+        File biomeDump = new File(modDir + File.separator + "biomeRegistry.cfg");
 
         try {
             xmlNewOreGen.createNewFile();
@@ -53,6 +55,12 @@ public abstract class CommonProxy {
         try {
             dumpRegistry.createNewFile();
             dump(dumpRegistry);
+        } catch (Exception exception) {
+        }
+
+        try {
+            biomeDump.createNewFile();
+            dumpBiomes(biomeDump);
         } catch (Exception exception) {
         }
 
@@ -81,6 +89,32 @@ public abstract class CommonProxy {
         config.save();
     }
 
+    private void dumpBiomes(File biomeDump){
+        try {
+            PrintWriter writer = new PrintWriter(biomeDump, "UTF-8");
+
+            writer.println("### THIS FILE CONTAINS ALL BIOMES REGISTRIES");
+            writer.println("### SEE HERE THE NAMES TO PUT IN THE XML FILE");
+            writer.println();
+            writer.println("### The names are with this configuration");
+            writer.println("### ID\n\t    NAME");
+            writer.println("### Use ID;NAME for the Biome selection in the XML");
+            writer.println();
+
+            Iterator biomesList = Biome.REGISTRY.iterator();
+
+            while(biomesList.hasNext()){
+                Biome biome = (Biome) biomesList.next();
+                writer.println(Biome.getIdForBiome(biome) + "\n\t" + biome.getBiomeName());
+                writer.println();
+            }
+
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void dump(File dumpRegistry) {
         try {
             PrintWriter writer = new PrintWriter(dumpRegistry, "UTF-8");
@@ -88,7 +122,7 @@ public abstract class CommonProxy {
             writer.println("### THIS FILE CONTAINS ALL BLOCK REGISTRIES");
             writer.println("### SEE HERE THE NAMES TO PUT IN THE XML FILE");
             writer.println();
-            writer.println("### The names with this configuration");
+            writer.println("### The names are with this configuration");
             writer.println("### LocalizedName\n\t    RegistryName");
             writer.println("### Use RegistryName for the new block spawn");
             writer.println();
