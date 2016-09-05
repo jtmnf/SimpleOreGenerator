@@ -1,0 +1,17 @@
+[
+{
+    "modid": "simpleoregen",
+    "name": "SimpleOreGen",
+    "description": "A Simple Ore Generator with a lot of functionalities",
+    "version": "1.10.2-0.4.1",
+    "mcversion": "1.10.2",
+    "url": "http://minecraft.curseforge.com/projects/simpleoregen",
+    "updateUrl": "",
+    "authorList": [ "jtmnf" ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [ ],
+    "parent": "",
+    "dependencies": [ ]
+}
+]
