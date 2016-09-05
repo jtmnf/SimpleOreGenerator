@@ -51,13 +51,18 @@ public class SpawnCommand extends CommandBase {
                 if (player.isCreative()) {
                     int y = Integer.parseInt(args[0]);
                     int size = Integer.parseInt(args[1]);
-                    Block block = Block.REGISTRY.getObject(new ResourceLocation("minecraft:" + args[2]));
+
+                    try {
+                        Block block = Block.REGISTRY.getObject(new ResourceLocation(args[2]));
 
 
-                    createVein((int) player.posX, (int) player.posZ, y, block, size, player.getEntityWorld(), 0, 0, 0);
+                        createVein((int) player.posX, (int) player.posZ, y, block, size, player.getEntityWorld(), 0, 0, 0);
 
-                    player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + block.getRegistryName() + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."));
-
+                        player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + block.getRegistryName() + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."));
+                    } catch (Exception e){
+                        player.addChatComponentMessage(new TextComponentString("Block " + args[2] + " not found. Did you type mod:block?"));
+                        player.addChatComponentMessage(new TextComponentString("For example: minecraft:diamond_ore"));
+                    }
                 } else {
                     player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));
                 }

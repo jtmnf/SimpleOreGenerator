@@ -4,9 +4,16 @@ package com.jtmnf.simpleoregen;
 import com.jtmnf.simpleoregen.command.ClearCommand;
 import com.jtmnf.simpleoregen.command.CountCommand;
 import com.jtmnf.simpleoregen.command.SpawnCommand;
+import com.jtmnf.simpleoregen.helper.BlockFinder;
+import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import com.jtmnf.simpleoregen.mods.Compatibility;
 import com.jtmnf.simpleoregen.proxy.CommonProxy;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockStone;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -21,7 +28,7 @@ public class SimpleOreGen {
     /* ===== MOD INFO ===== */
     public static final String MOD_NAME = "SimpleOreGen";
     public static final String MOD_ID = "simpleoregen";
-    public static final String MOD_VERSION = "1.10.2-0.3.1";
+    public static final String MOD_VERSION = "1.10.2-0.4.1";
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */
@@ -35,6 +42,14 @@ public class SimpleOreGen {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        if(DEBUG) {
+            BlockFinder.getBlockStateByName("minecraft:stone[variant=andesite]");
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south");
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south]");
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=false]");
+            BlockFinder.getBlockStateByName("minecraft:clay[variant=sand]");
+        }
+
         proxy.preInit(event);
     }
 

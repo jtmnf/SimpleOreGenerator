@@ -1,13 +1,17 @@
 package com.jtmnf.simpleoregen.proxy;
 
 import com.jtmnf.simpleoregen.handler.*;
+import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

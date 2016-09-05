@@ -144,7 +144,7 @@ public class ConfigHandler {
 
         dioriteClusterSize = config.get("03_diorite", "Size of a vein", dioriteClusterSize).getInt();
         dioriteClusterTries = config.get("03_diorite", "Number of tries to generate a vein", dioriteClusterTries).getInt();
-        dioriteClusterMaxY = config.get("03_diorite", "Max Y", diamondClusterMaxY).getInt();
+        dioriteClusterMaxY = config.get("03_diorite", "Max Y", dioriteClusterMaxY).getInt();
         dioriteClusterMinY = config.get("03_diorite", "Min Y", dioriteClusterMinY).getInt();
 
         andesiteClusterSize = config.get("02_andesite", "Size of a vein", andesiteClusterSize).getInt();
