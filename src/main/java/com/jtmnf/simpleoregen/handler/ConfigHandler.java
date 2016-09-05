@@ -18,6 +18,7 @@ public class ConfigHandler {
     public static boolean retrogenBedrock = false;
     public static boolean retrogenOresAccess = false;
     public static boolean retrogenBedrockAccess = false;
+    public static boolean deactivateOres = false;
 
     public static int coalClusterSize = 17;
     public static int ironClusterSize = 8;
@@ -101,6 +102,7 @@ public class ConfigHandler {
             retrogenBedrockAccess = true;
             config.get("01_"+Configuration.CATEGORY_GENERAL, "Retrogen Bedrock", retrogenBedrock).set(false);
         }
+        deactivateOres = config.get("01_"+ Configuration.CATEGORY_GENERAL, "Deactivate generation of vanilla ores)", deactivateOres).getBoolean();
 
         coalClusterSize = config.get("05_coal_ore", "Size of a vein", coalClusterSize).getInt();
         coalClusterTries = config.get("05_coal_ore", "Number of tries to generate a vein", coalClusterTries).getInt();

@@ -20,18 +20,18 @@ public class CustomWorldGenBlock {
     private List<Integer> dimensionsID;
     private String name;
 
-    public CustomWorldGenBlock(IBlockState iBlock, int size, int tries, int maxY, int minY, Block blockTarget, List<Biome> biomeList, List<Integer> dimensionsID) {
-        if(blockTarget == Blocks.AIR){
+    public CustomWorldGenBlock(IBlockState iBlock, int size, int tries, int maxY, int minY, IBlockState blockTarget, List<Biome> biomeList, List<Integer> dimensionsID) {
+        if(blockTarget == Blocks.AIR || blockTarget == null){
             this.worldGenerator = new WorldGenMinable(iBlock, size);
         }
         else {
-            this.worldGenerator = new WorldGenMinable(iBlock, size, BlockMatcher.forBlock(blockTarget));
+            this.worldGenerator = new WorldGenMinable(iBlock, size, BlockMatcher.forBlock(blockTarget.getBlock()));
         }
 
         this.tries = tries;
         this.maxY = maxY;
         this.minY = minY;
-        this.blockTarget = blockTarget;
+        this.blockTarget = blockTarget.getBlock();
         this.biomeList = biomeList;
         this.dimensionsID = dimensionsID;
         this.name = iBlock.getBlock().getLocalizedName();

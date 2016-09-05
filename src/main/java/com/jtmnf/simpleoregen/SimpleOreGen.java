@@ -32,7 +32,7 @@ public class SimpleOreGen {
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     @Mod.Instance("SimpleOreGen")
     public static SimpleOreGen instance;
@@ -43,11 +43,13 @@ public class SimpleOreGen {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         if(DEBUG) {
-            BlockFinder.getBlockStateByName("minecraft:stone[variant=andesite]");
-            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south");
-            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south]");
-            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=false]");
-            BlockFinder.getBlockStateByName("minecraft:clay[variant=sand]");
+            BlockFinder.getBlockStateByName("minecraft:stone[variant=andesite]", false);
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south", false);
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=true,facing=south]", false);
+            BlockFinder.getBlockStateByName("minecraft:end_portal_frame[eye=false]", false);
+            BlockFinder.getBlockStateByName("minecraft:clay[variant=sand]", false);
+            BlockFinder.getBlockStateByName("minecraft:clay", false);
+            BlockFinder.getBlockStateByName("minecraft:clay", true);
         }
 
         proxy.preInit(event);

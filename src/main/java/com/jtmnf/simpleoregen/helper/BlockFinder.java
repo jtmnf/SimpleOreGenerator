@@ -7,22 +7,27 @@ import net.minecraft.block.state.IBlockState;
 import java.util.Collection;
 
 public class BlockFinder {
-    public static IBlockState getBlockStateByName(String args) {
+
+    private static String EQUAL_SIGN = "=";
+
+    public static IBlockState getBlockStateByName(String args, boolean isTarget) {
         IBlockState finalBlockState;
 
         if (!args.contains("[")) {
-            LogHelper.info("No properties added to the block. Returning to the default state.");
+            if(!isTarget) {
+                LogHelper.info("No properties added to the block \'" + args + "\'. Returning the default state.");
+            }
             return Block.getBlockFromName(args).getDefaultState();
         }
 
-        String blockNameFormatted = getBeforeTwoDots(args);
+        String blockNameFormatted = getMainBlock(args);
         String blockProperties = getProperties(args);
 
         //result = Block.getBlockFromName(blockNameFormatted).getStateFromMeta(5);
         finalBlockState = Block.getBlockFromName(blockNameFormatted).getDefaultState();
 
         if (!args.contains("]")) {
-            LogHelper.error("Missing a \']\' in the block properties. Check the xml for [" +finalBlockState+ "]. Returning to the default state.");
+            LogHelper.error("Missing a \']\' in the block properties. Check the xml for \'" +args+ "\'. Returning the default state.");
             return finalBlockState;
         }
 
@@ -31,16 +36,14 @@ public class BlockFinder {
         if (blockProperties.contains(",")) {
             String[] propertiesNotSplitted = blockProperties.split(",");
 
-            for (int i = 0; i < propertiesNotSplitted.length; i++) {
-                if (blockProperties.contains("=")) {
-                    String[] properties = propertiesNotSplitted[i].split("=");
-                    finalBlockState = setBlockStateProperties(finalBlockState, collection, properties);
+            for (String properties : propertiesNotSplitted) {
+                if (properties.contains(EQUAL_SIGN)) {
+                    finalBlockState = processProperties(finalBlockState, collection, properties);
                 }
             }
         } else {
-            if (blockProperties.contains("=")) {
-                String[] properties = blockProperties.split("=");
-                finalBlockState = setBlockStateProperties(finalBlockState, collection, properties);
+            if (blockProperties.contains(EQUAL_SIGN)) {
+                finalBlockState = processProperties(finalBlockState, collection, blockProperties);
             }
         }
 
@@ -48,7 +51,7 @@ public class BlockFinder {
         return finalBlockState;
     }
 
-    private static String getBeforeTwoDots(String s) {
+    private static String getMainBlock(String s) {
         int firstBracket = s.indexOf("[");
         return s.substring(0, firstBracket);
     }
@@ -58,7 +61,15 @@ public class BlockFinder {
         return s.substring(firstBracket + 1, s.length() - 1);
     }
 
-    private static IBlockState setBlockStateProperties(IBlockState iBlockState, Collection<IProperty<?>> collectionOfProperties, String[] properties) {
+    private static IBlockState processProperties(IBlockState blockState, Collection collection, String blockProperties){
+        int firstOcurrence = blockProperties.indexOf(EQUAL_SIGN);
+        String commandState = blockProperties.substring(0, firstOcurrence);
+        String propertiesState = blockProperties.substring(firstOcurrence + 1, blockProperties.length());
+
+        return setBlockStateProperties(blockState, collection, commandState, propertiesState);
+    }
+
+    private static IBlockState setBlockStateProperties(IBlockState iBlockState, Collection<IProperty<?>> collectionOfProperties, String... properties) {
         if(properties.length == 2) {
             for (IProperty iProperty : collectionOfProperties) {
                 if (properties[0].equalsIgnoreCase(iProperty.getName())) {
@@ -73,7 +84,7 @@ public class BlockFinder {
             }
         }
         else{
-            LogHelper.error("Missing something after the \'=\' sign. Check the xml for [" +iBlockState+ "].");
+            LogHelper.error("Report to the mod Author \'jtmnf\'.");
         }
 
         return iBlockState;
