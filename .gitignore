@@ -42,6 +42,8 @@ options.txt
 /saves/
 /out
 /design
+gradlew
+gradlew.bat
 
 /world
 options.txt
