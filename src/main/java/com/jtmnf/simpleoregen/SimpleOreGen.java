@@ -28,11 +28,11 @@ public class SimpleOreGen {
     /* ===== MOD INFO ===== */
     public static final String MOD_NAME = "SimpleOreGen";
     public static final String MOD_ID = "simpleoregen";
-    public static final String MOD_VERSION = "1.10.2-0.4.2";
+    public static final String MOD_VERSION = "1.10.2-0.4.3";
 
     /* ========================== */
     /*  DO NOT TOUCH THIS PLEASE  */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     @Mod.Instance("SimpleOreGen")
     public static SimpleOreGen instance;

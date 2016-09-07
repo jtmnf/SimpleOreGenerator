@@ -26,22 +26,23 @@ import java.util.Iterator;
 public abstract class CommonProxy {
 
     private File xmlFile;
+    private String modConfigDirectory = null;
 
     public void preInit(FMLPreInitializationEvent event) {
-        fileConfigurations(event);
-        registerRecipes();
+        modConfigDirectory = event.getModConfigurationDirectory().toString();
     }
 
     public void init(FMLInitializationEvent event) {
-
+        fileConfigurations();
+        registerRecipes();
     }
 
     public void postInit(FMLPostInitializationEvent event) {
 
     }
 
-    private void fileConfigurations(FMLPreInitializationEvent event) {
-        String modDirString = event.getModConfigurationDirectory().toString() + File.separator + "simpleoregen";
+    private void fileConfigurations() {
+        String modDirString = modConfigDirectory + File.separator + "simpleoregen";
 
         File modDir = new File(modDirString);
         modDir.mkdirs();

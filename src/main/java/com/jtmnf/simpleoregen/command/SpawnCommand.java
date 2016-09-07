@@ -1,8 +1,10 @@
 package com.jtmnf.simpleoregen.command;
 
+import com.jtmnf.simpleoregen.helper.BlockFinder;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -53,12 +55,11 @@ public class SpawnCommand extends CommandBase {
                     int size = Integer.parseInt(args[1]);
 
                     try {
-                        Block block = Block.REGISTRY.getObject(new ResourceLocation(args[2]));
+                        IBlockState iBlockState = BlockFinder.getBlockStateByName(args[2], true);
 
+                        createVein((int) player.posX, (int) player.posZ, y, iBlockState, size, player.getEntityWorld(), 0, 0, 0);
 
-                        createVein((int) player.posX, (int) player.posZ, y, block, size, player.getEntityWorld(), 0, 0, 0);
-
-                        player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + block.getRegistryName() + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."));
+                        player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + iBlockState + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."));
                     } catch (Exception e){
                         player.addChatComponentMessage(new TextComponentString("Block " + args[2] + " not found. Did you type mod:block?"));
                         player.addChatComponentMessage(new TextComponentString("For example: minecraft:diamond_ore"));
@@ -72,14 +73,14 @@ public class SpawnCommand extends CommandBase {
         }
     }
 
-    private int createVein(int posX, int posZ, int y, Block block, int size, World entityWorld, int offsetX, int offsetY, int offsetZ) {
+    private int createVein(int posX, int posZ, int y, IBlockState block, int size, World entityWorld, int offsetX, int offsetY, int offsetZ) {
         if (size == 0) {
             return 0;
         }
 
         int offset = calcOffset(offsetX, offsetY, offsetZ);
-        if (entityWorld.getBlockState(new BlockPos(posX, y, posZ)) != block.getDefaultState()) {
-            entityWorld.setBlockState(new BlockPos(posX, y, posZ), block.getDefaultState());
+        if (entityWorld.getBlockState(new BlockPos(posX, y, posZ)) != block) {
+            entityWorld.setBlockState(new BlockPos(posX, y, posZ), block);
             size--;
         }
 
