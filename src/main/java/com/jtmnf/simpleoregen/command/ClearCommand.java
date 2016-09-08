@@ -3,6 +3,7 @@ package com.jtmnf.simpleoregen.command;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -22,10 +23,10 @@ public class ClearCommand extends CommandBase {
     private int topY = 200;
     private List aliases;
 
-    private Map<String, ArrayList<Block>> mapBlocks;
+    private Map<String, ArrayList<IBlockState>> mapBlocks;
 
 
-    public ClearCommand(Map<String, ArrayList<Block>> mapBlocks) {
+    public ClearCommand(Map<String, ArrayList<IBlockState>> mapBlocks) {
         this.aliases = new ArrayList();
         this.aliases.add("clearblocks");
 
@@ -63,11 +64,11 @@ public class ClearCommand extends CommandBase {
                     int z = (int) player.posZ - argZ;
 
 
-                    ArrayList<Block> blocks = new ArrayList<Block>();
+                    ArrayList<IBlockState> blocks = new ArrayList<IBlockState>();
                     boolean invert = false;
                     if (args.length > 2) {
                         if ((blocks = mapBlocks.get(args[2])) == null) {
-                            blocks = new ArrayList<Block>();
+                            blocks = new ArrayList<IBlockState>();
                         }
                         if (args.length > 3) {
                             if (args[3].equals("true")) {
@@ -89,7 +90,7 @@ public class ClearCommand extends CommandBase {
         }
     }
 
-    private int clearBlocks(int x, int z, int maxX, int maxZ, World world, ArrayList<Block> blocks, boolean invert) {
+    private int clearBlocks(int x, int z, int maxX, int maxZ, World world, ArrayList<IBlockState> blocks, boolean invert) {
         int countBlocks = 0;
         for (int i = x; i < x + (maxX * 2 + 1); i++) {
             for (int j = z; j < z + (maxZ * 2 + 1); j++) {
@@ -98,7 +99,7 @@ public class ClearCommand extends CommandBase {
 
                     if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.AIR.getDefaultState()) {
                         for (int blockIndex = 0; blockIndex < blocks.size() && !flag; blockIndex++) {
-                            if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(blockIndex).getDefaultState()) {
+                            if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(blockIndex)) {
                                 flag = true;
                             }
                         }

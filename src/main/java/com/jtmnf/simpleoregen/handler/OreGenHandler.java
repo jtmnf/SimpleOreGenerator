@@ -109,21 +109,6 @@ public class OreGenHandler implements IWorldGenerator {
     public void worldGenerator(Random random, int chunkX, int chunkZ, World world, int flag) {
         int dimensionID = world.provider.getDimension();
 
-        /*Iterator worldGen = worldGeneratorArrayList.entrySet().iterator();
-        while (worldGen.hasNext()) {
-            Map.Entry entry = (Map.Entry) worldGen.next();
-
-            EventWorldHandler eventWorldHandler = (EventWorldHandler) entry.getValue();
-            World auxWorld = eventWorldHandler.getWorld();
-
-            if (auxWorld != null && auxWorld.provider.getDimension() == dimensionID) {
-                this.generateBlock(eventWorldHandler.getWorldGenerator(), auxWorld, random, chunkX, chunkZ, 25, 0, 128);
-
-            } else if (auxWorld == null) {
-                this.generateBlock(eventWorldHandler.getWorldGenerator(), world, random, chunkX, chunkZ, 25, 0, 128);
-            }
-        }*/
-
         if(!ConfigHandler.deactivateOres) {
             for (CustomWorldGenBlock customWorldGenBlock : generalBlockGen) {
                 if (customWorldGenBlock.getDimensionsID() == null || customWorldGenBlock.getDimensionsID().contains(dimensionID)) {
@@ -137,23 +122,18 @@ public class OreGenHandler implements IWorldGenerator {
                 this.generateBlock(customWorldGenBlock, world, random, chunkX, chunkZ, customWorldGenBlock.getTries(), customWorldGenBlock.getMinY(), customWorldGenBlock.getMaxY());
             }
         }
-
-        /*switch (dimensionID) {
-            case 0:
-                for (CustomWorldGenBlock customWorldGenBlock : generalBlockGen) {
-                    this.generateBlock(customWorldGenBlock, world, random, chunkX, chunkZ, customWorldGenBlock.getTries(), customWorldGenBlock.getMinY(), customWorldGenBlock.getMaxY());
-                }
-
-                for (CustomWorldGenBlock customWorldGenBlock : customBlockGen) {
-                    this.generateBlock(customWorldGenBlock, world, random, chunkX, chunkZ, customWorldGenBlock.getTries(), customWorldGenBlock.getMinY(), customWorldGenBlock.getMaxY());
-                }
-        }*/
     }
 
     private void generateBlock(CustomWorldGenBlock worldGenerator, World world, Random rand, int chunkX, int chunkZ, int iterations, int lowestY, int highestY) {
         Random random = new Random();
 
         Biome biome = world.getChunkFromChunkCoords(chunkX, chunkZ).getBiome(new BlockPos(chunkX * 16, 50, chunkZ * 16), world.getBiomeProvider());
+
+        if(highestY < lowestY){
+            int t = highestY;
+            highestY = lowestY;
+            lowestY = t;
+        }
 
         if (worldGenerator.getBiomeList() == null || worldGenerator.getBiomeList().contains(biome)) {
             if ((random.nextInt(100) + 1) < ConfigHandler.probability) {

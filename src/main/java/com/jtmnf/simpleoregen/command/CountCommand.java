@@ -3,6 +3,7 @@ package com.jtmnf.simpleoregen.command;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -24,9 +25,9 @@ public class CountCommand extends CommandBase {
 
     private int[] numOres;
 
-    private Map<String, ArrayList<Block>> mapBlocks;
+    private Map<String, ArrayList<IBlockState>> mapBlocks;
 
-    public CountCommand(Map<String, ArrayList<Block>> mapBlocks) {
+    public CountCommand(Map<String, ArrayList<IBlockState>> mapBlocks) {
         this.aliases = new ArrayList();
         this.aliases.add("countblocks");
 
@@ -63,10 +64,10 @@ public class CountCommand extends CommandBase {
                     int x = (int) player.posX - argX;
                     int z = (int) player.posZ - argZ;
 
-                    ArrayList<Block> blocks = new ArrayList<Block>();
+                    ArrayList<IBlockState> blocks = new ArrayList<IBlockState>();
                     if (args.length > 2) {
                         if ((blocks = mapBlocks.get(args[2])) == null) {
-                            blocks = new ArrayList<Block>();
+                            blocks = new ArrayList<IBlockState>();
                         }
                     }
 
@@ -77,7 +78,7 @@ public class CountCommand extends CommandBase {
 
                     if (blocks.size() > 0) {
                         for (int i = 0; i < blocks.size(); i++) {
-                            String oreName = ChatFormatting.RED + blocks.get(i).getLocalizedName() + ChatFormatting.WHITE + ": " + ChatFormatting.BOLD + numOres[i] + " block(s)";
+                            String oreName = ChatFormatting.RED + blocks.get(i).toString() + ChatFormatting.WHITE + ": " + ChatFormatting.BOLD + numOres[i] + " block(s)";
                             player.addChatComponentMessage(new TextComponentString(oreName));
                         }
                     }
@@ -90,7 +91,7 @@ public class CountCommand extends CommandBase {
         }
     }
 
-    private int countBlocks(int x, int z, int maxX, int maxZ, World world, ArrayList<Block> blocks) {
+    private int countBlocks(int x, int z, int maxX, int maxZ, World world, ArrayList<IBlockState> blocks) {
         int countBlocks = 0;
         for (int i = x; i < x + (maxX * 2 + 1); i++) {
             for (int j = z; j < z + (maxZ * 2 + 1); j++) {
@@ -99,7 +100,7 @@ public class CountCommand extends CommandBase {
 
                     if (world.getBlockState(new BlockPos(i, y, j)) != Blocks.AIR.getDefaultState()) {
                         for (int oreIndex = 0; oreIndex < blocks.size() && !flag; oreIndex++) {
-                            if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(oreIndex).getDefaultState()) {
+                            if (world.getBlockState(new BlockPos(i, y, j)) == blocks.get(oreIndex)) {
                                 countBlocks++;
                                 numOres[oreIndex]++;
                                 flag = true;

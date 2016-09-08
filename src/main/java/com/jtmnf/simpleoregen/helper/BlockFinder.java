@@ -15,7 +15,7 @@ public class BlockFinder {
 
         if (!args.contains("[")) {
             if(!isTarget) {
-                LogHelper.info("No properties added to the block \'" + args + "\'. Returning the default state.");
+                LogHelper.debug("No properties added to the block \'" + args + "\'. Returning the default state.");
             }
             return Block.getBlockFromName(args).getDefaultState();
         }
@@ -47,7 +47,7 @@ public class BlockFinder {
             }
         }
 
-        LogHelper.info("BlockFinder: " + finalBlockState);
+        LogHelper.debug("BlockFinder: " + finalBlockState);
         return finalBlockState;
     }
 

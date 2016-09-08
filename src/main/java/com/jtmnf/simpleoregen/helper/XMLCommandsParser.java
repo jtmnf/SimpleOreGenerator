@@ -1,6 +1,7 @@
 package com.jtmnf.simpleoregen.helper;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import org.w3c.dom.Document;
@@ -50,8 +51,8 @@ public class XMLCommandsParser {
         ores.add(Blocks.EMERALD_ORE);
     }
 
-    public Map<String, ArrayList<Block>> parseCommand(String commandName) {
-        Map<String, ArrayList<Block>> map = new HashMap<String, ArrayList<Block>>();
+    public Map<String, ArrayList<IBlockState>> parseCommand(String commandName) {
+        Map<String, ArrayList<IBlockState>> map = new HashMap<String, ArrayList<IBlockState>>();
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -79,9 +80,10 @@ public class XMLCommandsParser {
 
                                         NodeList node = element.getElementsByTagName(nodeBlock);
 
-                                        ArrayList<Block> temp = new ArrayList<Block>();
+                                        ArrayList<IBlockState> temp = new ArrayList<IBlockState>();
                                         for (int z = 0; z < node.getLength(); ++z) {
-                                            temp.add(Block.REGISTRY.getObject(new ResourceLocation(node.item(z).getTextContent())));
+                                            temp.add(BlockFinder.getBlockStateByName(node.item(z).getTextContent(), true));
+                                            //temp.add(Block.REGISTRY.getObject(new ResourceLocation(node.item(z).getTextContent())));
                                         }
                                         map.put(element.getTagName(), temp);
                                     }

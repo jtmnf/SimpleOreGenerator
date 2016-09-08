@@ -3,6 +3,7 @@ package com.jtmnf.simpleoregen.proxy;
 import com.jtmnf.simpleoregen.handler.*;
 import com.jtmnf.simpleoregen.helper.LogHelper;
 import com.jtmnf.simpleoregen.helper.XMLCommandsParser;
+import com.mojang.realmsclient.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -14,31 +15,98 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.logging.Log;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public abstract class CommonProxy {
 
     private File xmlFile;
     private String modConfigDirectory = null;
 
+    private static HashMap<String, Boolean> modsLoaded = new HashMap<String, Boolean>();
+
+    private boolean ImmersiveEngineering = false;
+    private boolean Substratum = false;
+    private boolean Mekanism = false;
+    private boolean BiomesOPlenty = false;
+    private boolean Forestry = false;
+    private boolean ExtremeReactors = false;
+
     public void preInit(FMLPreInitializationEvent event) {
         modConfigDirectory = event.getModConfigurationDirectory().toString();
+        addModsToHashMap();
     }
 
     public void init(FMLInitializationEvent event) {
-        fileConfigurations();
-        registerRecipes();
     }
 
     public void postInit(FMLPostInitializationEvent event) {
+        LogHelper.info("=== SimpleOreGen says hi.");
 
+        modLoaderHelper();
+        fileConfigurations();
+        registerRecipes();
+
+        LogHelper.info("=== SimpleOreGen says bye.");
+    }
+
+    private void addModsToHashMap() {
+        modsLoaded.put("immersiveengineering", false);
+        modsLoaded.put("substratum", false);
+        modsLoaded.put("mekanism", false);
+        modsLoaded.put("biomesoplenty", false);
+        modsLoaded.put("forestry", false);
+        modsLoaded.put("bigreactors", false);
+    }
+
+    private void modLoaderHelper() {
+        Iterator mods = modsLoaded.entrySet().iterator();
+
+        while(mods.hasNext()){
+            Map.Entry m = (Map.Entry) mods.next();
+
+            if(Loader.isModLoaded(m.getKey().toString())){
+                LogHelper.info(m.getKey().toString().toUpperCase() + " integration.");
+                modsLoaded.put(m.getKey().toString(), true);
+            }
+        }
+
+        /*
+        if(Loader.isModLoaded("immersiveengineering")){
+            LogHelper.info("Immersive Engineering integration.");
+            modsLoaded.put("immersiveengineering", true);
+        }
+        if(Loader.isModLoaded("substratum")){
+            LogHelper.info("Substratum integration.");
+            modsLoaded.put("substratum", false);
+        }
+        if(Loader.isModLoaded("mekanism")){
+            LogHelper.info("Mekanism integration.");
+            modsLoaded.put("mekanism", false);
+        }
+        if(Loader.isModLoaded("biomesoplenty")){
+            LogHelper.info("Biomes O'Plenty integration.");
+            modsLoaded.put("biomesoplenty", false);
+        }
+        if(Loader.isModLoaded("forestry")){
+            LogHelper.info("Forestry integration.");
+            modsLoaded.put("forestry", false);
+        }
+        if(Loader.isModLoaded("bigreactors")){
+            LogHelper.info("Extreme Reactors integration.");
+            modsLoaded.put("bigreactors", false);
+        }
+        */
     }
 
     private void fileConfigurations() {
