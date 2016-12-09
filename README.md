@@ -1,5 +1,5 @@
 # SimpleOreGen
-A Simple Ore Generator with a lot of functionalities for Minecraft 1.8.4, 1.9, 1.9.4, 1.10 and 1.10.2
+A Simple Ore Generator with a lot of functionalities for Minecraft 1.8.4, 1.9, 1.9.4, 1.10, 1.10.2 and 1.11
 
 # License
 ##Public Modpacks
