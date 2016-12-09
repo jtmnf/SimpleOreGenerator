@@ -55,7 +55,7 @@ public class CountCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) sender;
 
             if (args.length < 2) {
-                player.addChatComponentMessage(new TextComponentString("Need to specify the max for x and z."));
+                player.addChatComponentMessage(new TextComponentString("Need to specify the max for x and z."), true);
             } else {
                 if (player.isCreative()) {
                     int argX = Integer.parseInt(args[0]);
@@ -74,16 +74,16 @@ public class CountCommand extends CommandBase {
                     numOres = new int[blocks.size()];
                     int num = countBlocks(x, z, argX, argZ, player.getEntityWorld(), blocks);
 
-                    player.addChatComponentMessage(new TextComponentString(ChatFormatting.BOLD + "=== Counted " + num + " block(s) ==="));
+                    player.addChatComponentMessage(new TextComponentString(ChatFormatting.BOLD + "=== Counted " + num + " block(s) ==="), true);
 
                     if (blocks.size() > 0) {
                         for (int i = 0; i < blocks.size(); i++) {
                             String oreName = ChatFormatting.RED + blocks.get(i).toString() + ChatFormatting.WHITE + ": " + ChatFormatting.BOLD + numOres[i] + " block(s)";
-                            player.addChatComponentMessage(new TextComponentString(oreName));
+                            player.addChatComponentMessage(new TextComponentString(oreName), true);
                         }
                     }
                 } else {
-                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));
+                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."), true);
                 }
             }
         } else {

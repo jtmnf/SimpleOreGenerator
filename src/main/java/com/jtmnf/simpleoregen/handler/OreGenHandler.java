@@ -8,12 +8,9 @@ import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -73,8 +70,10 @@ public class OreGenHandler implements IWorldGenerator {
     private static String maxY = "max_y";
     private static String minY = "min_y";
     private static String blockMatcher = "blockMatcher";
-    private static String biomes = "biomes";
+    private static String biomes_blacklist = "biomes_blacklist";
     private static String dimensions = "dimensions";
+
+    private static boolean warning = false;
 
     public OreGenHandler() {
         GameRegistry.registerWorldGenerator(this, 1);
@@ -109,7 +108,7 @@ public class OreGenHandler implements IWorldGenerator {
     public void worldGenerator(Random random, int chunkX, int chunkZ, World world, int flag) {
         int dimensionID = world.provider.getDimension();
 
-        if(!ConfigHandler.deactivateOres) {
+        if (!ConfigHandler.deactivateOres) {
             for (CustomWorldGenBlock customWorldGenBlock : generalBlockGen) {
                 if (customWorldGenBlock.getDimensionsID() == null || customWorldGenBlock.getDimensionsID().contains(dimensionID)) {
                     this.generateBlock(customWorldGenBlock, world, random, chunkX, chunkZ, customWorldGenBlock.getTries(), customWorldGenBlock.getMinY(), customWorldGenBlock.getMaxY());
@@ -129,13 +128,13 @@ public class OreGenHandler implements IWorldGenerator {
 
         Biome biome = world.getChunkFromChunkCoords(chunkX, chunkZ).getBiome(new BlockPos(chunkX * 16, 50, chunkZ * 16), world.getBiomeProvider());
 
-        if(highestY < lowestY){
+        if (highestY < lowestY) {
             int t = highestY;
             highestY = lowestY;
             lowestY = t;
         }
 
-        if (worldGenerator.getBiomeList() == null || worldGenerator.getBiomeList().contains(biome)) {
+        if (worldGenerator.getBiomeList() == null || !worldGenerator.getBiomeList().contains(biome)) {
             if ((random.nextInt(100) + 1) < ConfigHandler.probability) {
                 for (int i = 0; i < iterations; ++i) {
                     int x = chunkX * 16 + rand.nextInt(16);
@@ -181,20 +180,24 @@ public class OreGenHandler implements IWorldGenerator {
                                 for (IBlockState blockMatcherDetailed : bm) {
                                     IBlockState iBlockState = BlockFinder.getBlockStateByName(element.getElementsByTagName(registryName).item(0).getTextContent(), false);
 
-                                    customBlockGen.add(new CustomWorldGenBlock(
-                                            iBlockState,
-                                            //Block.REGISTRY.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())).getDefaultState(),
-                                            Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()),
-                                            Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()),
-                                            Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()),
-                                            Integer.parseInt(element.getElementsByTagName(minY).item(0).getTextContent()),
-                                            blockMatcherDetailed,
-                                            processListOfBiomes(element.getElementsByTagName(biomes).item(0).getTextContent()),
-                                            processListOfDimensions(element.getElementsByTagName(dimensions).item(0).getTextContent())
-                                            )
-                                    );
+                                    try {
+                                        customBlockGen.add(new CustomWorldGenBlock(
+                                                        iBlockState,
+                                                        //Block.REGISTRY.getObject(new ResourceLocation(element.getElementsByTagName(registryName).item(0).getTextContent())).getDefaultState(),
+                                                        Integer.parseInt(element.getElementsByTagName(sizeVein).item(0).getTextContent()),
+                                                        Integer.parseInt(element.getElementsByTagName(nTries).item(0).getTextContent()),
+                                                        Integer.parseInt(element.getElementsByTagName(maxY).item(0).getTextContent()),
+                                                        Integer.parseInt(element.getElementsByTagName(minY).item(0).getTextContent()),
+                                                        blockMatcherDetailed,
+                                                        processListOfBiomes(element.getElementsByTagName(biomes_blacklist).item(0).getTextContent()),
+                                                        processListOfDimensions(element.getElementsByTagName(dimensions).item(0).getTextContent())
+                                                )
+                                        );
+                                    }catch (NullPointerException e){
+                                        warning = true;
+                                    }
 
-                                    if(!isPrinted) {
+                                    if (!isPrinted) {
                                         LogHelper.info("Processed \'" + iBlockState + "\' correctly for BlockMatcher[" + bm + "]");
                                         isPrinted = true;
                                     }
@@ -257,8 +260,8 @@ public class OreGenHandler implements IWorldGenerator {
         StringTokenizer stringTokenizer = new StringTokenizer(textContent, ",");
         while (stringTokenizer.hasMoreElements()) {
             blockList.add(BlockFinder.getBlockStateByName(stringTokenizer.nextToken(), true));
-                    //getBlockMatcher(Block.REGISTRY.getObject(new ResourceLocation(stringTokenizer.nextToken()))));
-            LogHelper.debug("Block: " + blockList.get(blockList.size()-1));
+            //getBlockMatcher(Block.REGISTRY.getObject(new ResourceLocation(stringTokenizer.nextToken()))));
+            LogHelper.debug("Block: " + blockList.get(blockList.size() - 1));
         }
 
         return blockList;
@@ -314,7 +317,7 @@ public class OreGenHandler implements IWorldGenerator {
             blockM.appendChild(file.createTextNode(bMatcher));
             wool.appendChild(blockM);
 
-            Element biomesToSpawn = file.createElement(biomes);
+            Element biomesToSpawn = file.createElement(biomes_blacklist);
 
             String biomesList = "";
             Iterator biomesArray = Biome.REGISTRY.iterator();
@@ -360,5 +363,13 @@ public class OreGenHandler implements IWorldGenerator {
         generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), ConfigHandler.graniteClusterSize, ConfigHandler.graniteClusterTries, ConfigHandler.graniteClusterMaxY, ConfigHandler.graniteClusterMinY, BlockFinder.getBlockStateByName(ConfigHandler.graniteTarget, true), null, null));
         generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), ConfigHandler.dioriteClusterSize, ConfigHandler.dioriteClusterTries, ConfigHandler.dioriteClusterMaxY, ConfigHandler.dioriteClusterMinY, BlockFinder.getBlockStateByName(ConfigHandler.dioriteTarget, true), null, null));
         generalBlockGen.add(new CustomWorldGenBlock(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), ConfigHandler.andesiteClusterSize, ConfigHandler.andesiteClusterTries, ConfigHandler.andesiteClusterMaxY, ConfigHandler.andesiteClusterMinY, BlockFinder.getBlockStateByName(ConfigHandler.andesiteTarget, true), null, null));
+    }
+
+    public static String getWarning(){
+        if(warning){
+            return "Warning: SimpleOreGen didn't load properly. Reset the configs.";
+        }
+
+        return "";
     }
 }

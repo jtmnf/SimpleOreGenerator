@@ -48,7 +48,7 @@ public class SpawnCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) sender;
 
             if (args.length != 3) {
-                player.addChatComponentMessage(new TextComponentString("Need to specify the y, the block and the size of the vein."));
+                player.addChatComponentMessage(new TextComponentString("Need to specify the y, the block and the size of the vein."), true);
             } else {
                 if (player.isCreative()) {
                     int y = Integer.parseInt(args[0]);
@@ -59,13 +59,13 @@ public class SpawnCommand extends CommandBase {
 
                         createVein((int) player.posX, (int) player.posZ, y, iBlockState, size, player.getEntityWorld(), 0, 0, 0);
 
-                        player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + iBlockState + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."));
+                        player.addChatComponentMessage(new TextComponentString("Spawned a " + ChatFormatting.BOLD + ChatFormatting.RED + iBlockState + ChatFormatting.RESET + " vein with " + ChatFormatting.BOLD + size + " block(s)."), true);
                     } catch (Exception e){
-                        player.addChatComponentMessage(new TextComponentString("Block " + args[2] + " not found. Did you type mod:block?"));
-                        player.addChatComponentMessage(new TextComponentString("For example: minecraft:diamond_ore"));
+                        player.addChatComponentMessage(new TextComponentString("Block " + args[2] + " not found. Did you type mod:block?"), true);
+                        player.addChatComponentMessage(new TextComponentString("For example: minecraft:diamond_ore"), true);
                     }
                 } else {
-                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));
+                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."), true);
                 }
             }
         } else {

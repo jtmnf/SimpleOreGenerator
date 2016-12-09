@@ -24,7 +24,7 @@ public class BedrockHandler implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         if (world.getWorldType() != WorldType.FLAT && ConfigHandler.flatBedrock) {
-            worldGenerator(world, chunkX, chunkZ);
+            //worldGenerator(world, chunkX, chunkZ);
         }
     }
 

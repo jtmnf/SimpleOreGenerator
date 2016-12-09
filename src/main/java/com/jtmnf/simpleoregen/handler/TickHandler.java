@@ -25,13 +25,13 @@ public class TickHandler {
         if (event.getGui() instanceof GuiCreateWorld) {
             String warn1 = "This pack contains " + ChatFormatting.RED + SimpleOreGen.MOD_NAME + ChatFormatting.RESET + ".";
             //String warn2 = "It might take a " + ChatFormatting.GREEN + "little while" + ChatFormatting.RESET + " to generate a new world.";
-            renderInScreen((GuiCreateWorld) event.getGui(), warn1, "");
+            renderInScreen((GuiCreateWorld) event.getGui(), warn1, OreGenHandler.getWarning());
         }
 
     }
 
     private void renderInScreen(GuiCreateWorld guiScreen, String warn1, String warn2) {
         guiScreen.drawString(minecraft.fontRendererObj, warn1, x, y, 0xffffff);
-        //guiScreen.drawString(minecraft.fontRendererObj, warn2, x, y + 10, 0xffffff);
+        guiScreen.drawString(minecraft.fontRendererObj, warn2, x, y + 10, 0xff0000);
     }
 }

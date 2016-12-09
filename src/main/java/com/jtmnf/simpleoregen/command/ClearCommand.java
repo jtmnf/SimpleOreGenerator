@@ -54,7 +54,7 @@ public class ClearCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) sender;
 
             if (args.length < 2) {
-                player.addChatComponentMessage(new TextComponentString("Need to specify the max for x and z."));
+                player.addChatComponentMessage(new TextComponentString("Need to specify the max for x and z."), true);
             } else {
                 if (player.isCreative()) {
                     int argX = Integer.parseInt(args[0]);
@@ -77,12 +77,12 @@ public class ClearCommand extends CommandBase {
                         }
                     }
 
-                    player.addChatComponentMessage(new TextComponentString("Starting to clear at: " + ChatFormatting.BOLD + x + ", " + topY + ", " + z));
+                    player.addChatComponentMessage(new TextComponentString("Starting to clear at: " + ChatFormatting.BOLD + x + ", " + topY + ", " + z), true);
                     int num = clearBlocks(x, z, argX, argZ, player.getEntityWorld(), blocks, invert);
-                    player.addChatComponentMessage(new TextComponentString("Cleared " + ChatFormatting.BOLD + num + " blocks"));
+                    player.addChatComponentMessage(new TextComponentString("Cleared " + ChatFormatting.BOLD + num + " blocks"), true);
 
                 } else {
-                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."));
+                    player.addChatComponentMessage(new TextComponentString("You can only execute this command in creative mod."), true);
                 }
             }
         } else {
